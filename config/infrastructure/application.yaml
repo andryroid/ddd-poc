@@ -1,0 +1,10 @@
+services:
+    Infrastructure\:
+        resource: '../../src/Infrastructure'
+        exclude:
+            - '../../src/DependencyInjection/'
+            - '../../src/Entity/'
+            - '../../src/Kernel.php'
+    Infrastructure\:
+        resource: '../../src/Controller/'
+        tags: ['controller.service_arguments']

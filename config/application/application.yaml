@@ -1,0 +1,4 @@
+services:
+    
+    Application\:
+        resource: '../../src/Application'
