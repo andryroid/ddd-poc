@@ -96,7 +96,7 @@
             "./config/services.yaml",
             "./public/index.php",
             "./src/Controller/.gitignore",
-            "./src/Kernel.php"
+            "./src/Infrastructure/Kernel.php"
         ]
     },
     "symfony/http-foundation": {
