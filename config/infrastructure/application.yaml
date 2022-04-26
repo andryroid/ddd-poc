@@ -4,7 +4,7 @@ services:
         exclude:
             - '../../src/DependencyInjection/'
             - '../../src/Entity/'
-            - '../../src/Kernel.php'
+            - '../../src/Infrastructure/Kernel.php'
     Infrastructure\:
         resource: '../../src/Controller/'
         tags: ['controller.service_arguments']
