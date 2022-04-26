@@ -31,9 +31,13 @@
         "psr-4": {
             "Domain\\": "src/Domain",
             "Application\\": "src/Application",
-            "Infrastructure\\": "src/Infrastructure",
-            "App\\": "src/Infrastructure/Kernel.php"
-        }
+            "Infrastructure\\": "src/Infrastructure"
+        },
+        "classmap": [
+            {
+                "App\\Kernel": "src/Infrastructure/Kernel.php"
+            }
+        ]
     },
     "autoload-dev": {
         "psr-4": {

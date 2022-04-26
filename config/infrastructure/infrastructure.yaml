@@ -5,6 +5,7 @@ services:
             - '../../src/DependencyInjection/'
             - '../../src/Infrastructure/Entity/'
             - '../../src/Infrastructure/Kernel.php'
-    Infrastructure\:
+
+    Infrastructure\Controller\:
         resource: '../../src/Infrastructure/Controller/'
         tags: ['controller.service_arguments']
