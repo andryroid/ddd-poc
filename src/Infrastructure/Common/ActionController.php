@@ -14,10 +14,13 @@ class ActionController {
     }
 
     protected function json(array $response, int $statusCode, array $headers = []) : JsonResponse {
-        return new JsonResponse(
+        $response =  new JsonResponse(
             json_encode($response),
             $statusCode,
-            $$headers
+            $headers
         );
+        if (count($headers) === 0)
+            $response->headers->set('Content-Type','application/json');
+        return $response;
     }
 }
