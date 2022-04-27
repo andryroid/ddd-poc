@@ -9,3 +9,5 @@ services:
     Infrastructure\Controller\:
         resource: '../../src/Infrastructure/Controller/'
         tags: ['controller.service_arguments']
+
+    Infrastructure\Common\Response\ResponseManagerInterface: '@Infrastructure\Common\Response\ResponseManager'

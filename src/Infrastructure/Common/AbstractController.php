@@ -3,6 +3,7 @@
 namespace Infrastructure\Common;
 
 use Infrastructure\Common\Response\ResponseManagerInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 abstract class AbstractController
 {
