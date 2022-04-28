@@ -2,16 +2,25 @@
 
 namespace Infrastructure\Common;
 
+use Infrastructure\Common\Dispatcher\MessageDispatcherInterface;
 use Infrastructure\Common\Response\ResponseManagerInterface;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 abstract class AbstractController
 {
-    //todo add my dependencies (messenger bus,...)
-   public function __construct(
-       protected ResponseManagerInterface $responseManager
-   )
-   {
-   }
+    public function __construct(
+        protected ResponseManagerInterface $responseManager,
+        protected MessageDispatcherInterface $messengerDispatcher
+    ) {
+    }
+
+    public function query(object $message): mixed
+    {
+        return $this->messengerDispatcher->dispatchMessage($message);
+    }
+
+    public function command(object $message): mixed
+    {
+        return $this->messengerDispatcher->dispatchMessage($message);
+    }
 
 }

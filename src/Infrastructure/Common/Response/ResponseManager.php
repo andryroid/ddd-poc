@@ -2,28 +2,32 @@
 
 namespace Infrastructure\Common\Response;
 
-use Infrastructure\Common\Response\ResponseManagerInterface;
 use JsonSerializable;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-final class ResponseManager implements ResponseManagerInterface {
+final class ResponseManager implements ResponseManagerInterface
+{
 
-    public function success(JsonSerializable|array $data): JsonResponse {
+    public function success(JsonSerializable|array $data, int $status = 200): JsonResponse
+    {
         return new JsonResponse(
             [
-                'status' => 200,
+                'status' => $status,
                 'payload' => $data
             ],
-            200);
+            $status
+        );
     }
 
-    public function error(JsonSerializable|array $data): JsonResponse {
+    public function error(JsonSerializable|array $data, int $status = 500): JsonResponse
+    {
         return new JsonResponse(
             [
-                'status' => 500,
+                'status' => $status,
                 'payload' => $data
             ],
-            200);
+            200
+        );
     }
 
 }

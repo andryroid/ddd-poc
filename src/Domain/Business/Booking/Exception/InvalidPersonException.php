@@ -4,6 +4,7 @@ namespace Domain\Business\Booking\Exception;
 
 use Exception;
 
-final class BookingInformationIncorrectException extends Exception
+final class InvalidPersonException extends Exception
 {
+
 }
