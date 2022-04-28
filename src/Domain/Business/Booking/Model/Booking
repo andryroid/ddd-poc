@@ -1,0 +1,25 @@
+<?php
+
+namespace Domain\Business\Booking\Model;
+
+use Domain\Business\Booking\ValueObject\Contact;
+use Domain\Business\Booking\ValueObject\Person;
+
+final class Booking {
+
+    private function __construct()
+    {
+        
+    }
+
+    public static function BookATrip(
+        Person $person,
+        Contact $contact,
+        Departure $departure,
+        Destination $destination,
+
+        \DateTime $departureTime
+    ) {
+
+    }
+}
