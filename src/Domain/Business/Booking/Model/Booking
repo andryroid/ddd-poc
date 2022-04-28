@@ -2,24 +2,30 @@
 
 namespace Domain\Business\Booking\Model;
 
-use Domain\Business\Booking\ValueObject\Contact;
+use Domain\Business\Booking\ValueObject\Contacts;
+use Domain\Business\Booking\ValueObject\Location;
 use Domain\Business\Booking\ValueObject\Person;
 
 final class Booking {
 
-    private function __construct()
+    private function __construct(
+        private Person $person,
+        private Contacts $contacts,
+        private Location $departure,
+        private Location $destination,
+        private \DateTime $departureTime
+    )
     {
         
     }
 
     public static function BookATrip(
         Person $person,
-        Contact $contact,
-        Departure $departure,
-        Destination $destination,
-
+        Contacts $contacts,
+        Location $departure,
+        Location $destination,
         \DateTime $departureTime
     ) {
-
+        
     }
 }

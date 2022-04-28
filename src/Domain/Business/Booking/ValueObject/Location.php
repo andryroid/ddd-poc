@@ -2,11 +2,12 @@
 
 namespace Domain\Business\Booking\ValueObject;
 
-final class Person {
+final class Location {
     public function __construct(
-        public string $firstName,
-        public string $lastName
+        public string $locationId,
+        public string $locationName
     )
     {
+        
     }
 }
