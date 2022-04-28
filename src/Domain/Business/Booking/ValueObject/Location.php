@@ -10,4 +10,11 @@ final class Location {
     {
         
     }
+
+    public function isTheSameLocation(Location $ohterLocation) : bool {
+        return 
+            $this->locationId === $ohterLocation->locationId 
+            && 
+            $this->locationName === $ohterLocation->locationName;
+    }
 }

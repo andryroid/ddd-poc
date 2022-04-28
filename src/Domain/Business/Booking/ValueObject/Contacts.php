@@ -15,4 +15,8 @@ final class Contacts {
             $this->items[] = $contact;
        return $this;
    }
+
+   public function getContacts() : array {
+       return $this->items;
+   }
 }

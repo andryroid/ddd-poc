@@ -2,6 +2,7 @@
 
 namespace Domain\Business\Booking\Model;
 
+use Domain\Business\Booking\Exception\BookingInformationIncorrectException;
 use Domain\Business\Booking\ValueObject\Contacts;
 use Domain\Business\Booking\ValueObject\Location;
 use Domain\Business\Booking\ValueObject\Person;
@@ -25,7 +26,27 @@ final class Booking {
         Location $departure,
         Location $destination,
         \DateTime $departureTime
-    ) {
+    ) : self {
+        //check person
+        if (empty($person->firstName) || empty($person->firstName))
+            throw new BookingInformationIncorrectException("Person information are missing");
+        //check contact
+        if (count($contacts->getContacts())>0)
+            throw new BookingInformationIncorrectException("You need to specify at least one contact information");
+        //check departure && destination
+        if ($departure->isTheSameLocation($destination))
+            throw new BookingInformationIncorrectException("Destination is equal to Departure");
+        //check departureTime (should not in the past)
+        if (new \DateTime() > $departureTime)
+            throw new BookingInformationIncorrectException("Destination is equal to Departure");
         
+        //everything is ok, create the booking object. 
+        return new Booking(
+            person: $person,
+            contacts: $contacts,
+            departure: $departure,
+            destination: $destination,
+            departureTime: $departureTime,
+        );
     }
 }
