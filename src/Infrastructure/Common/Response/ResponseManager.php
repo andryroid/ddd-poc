@@ -1,6 +1,6 @@
 <?php
 
-namespace Infrastructure\Controller\Booking\Response;
+namespace Infrastructure\Common\Response;
 
 use Infrastructure\Common\Response\ResponseManagerInterface;
 use JsonSerializable;
