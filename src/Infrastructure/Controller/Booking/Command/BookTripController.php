@@ -14,7 +14,7 @@ final class BookTripController extends AbstractController
         return $this->responseManager->success(
             [
                 'status' => 200,
-                'payload' => $information
+                'data' => $information
             ]);
     }
 }
