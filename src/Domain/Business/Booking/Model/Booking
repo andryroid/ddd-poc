@@ -6,8 +6,9 @@ use Domain\Business\Booking\Exception\BookingInformationIncorrectException;
 use Domain\Business\Booking\ValueObject\Contacts;
 use Domain\Business\Booking\ValueObject\Location;
 use Domain\Business\Booking\ValueObject\Person;
+use Domain\Utils\AggregateRoot\AggregateRoot;
 
-final class Booking {
+final class Booking extends AggregateRoot {
 
     private function __construct(
         private Person $person,
