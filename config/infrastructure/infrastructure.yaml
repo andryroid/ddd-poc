@@ -15,4 +15,5 @@ services:
         resource: '../../src/Infrastructure/Controller/'
         tags: ['controller.service_arguments']
 
-    Infrastructure\Common\Response\ResponseManagerInterface: '@Infrastructure\Common\Response\ResponseManager'
+    #in case of multiple injection
+    #Infrastructure\Common\Response\ResponseManagerInterface: <$your_var_here> '@Infrastructure\Common\Response\ResponseManager'
