@@ -10,15 +10,24 @@ use Domain\Utils\Identifier\IndentifierInterface;
 
 final class CreateBookingCommand
 {
-    public function __construct(
-        public readonly Person $person,
-        public readonly ContactsInterface $contacts,
-        public readonly Location $departure,
-        public readonly Location $destination,
-        public readonly \DateTime $departureTime
-    )
+    public readonly IndentifierInterface $indentifierInterface;
+    public readonly Person $person;
+    public readonly ContactsInterface $contacts;
+    public readonly Location $departure;
+    public readonly Location $destination;
+    public readonly \DateTime $departureTime;
+    
+    public function createBooking(
+        IndentifierInterface $indentifierInterface,
+        object $bookingData
+    ): void 
     {
-        
+        $this->indentifierInterface = $indentifierInterface;
+        $this->person = Person::build(
+            $bookingData->person->first_name,
+            $bookingData->person->last_name,
+        );
     }
+}
     
 }
