@@ -9,11 +9,13 @@ use Domain\Business\Booking\Exception\InvalidDepartureException;
 use Domain\Business\Booking\Model\Properties\Location;
 use Domain\Business\Booking\Model\Properties\Person;
 use Domain\Utils\AggregateRoot\AggregateRoot;
+use Domain\Utils\Identifier\IndentifierInterface;
 
 final class Booking extends AggregateRoot
 {
 
     private function __construct(
+        private IndentifierInterface $identifier,
         private Person $person,
         private ContactsInterface $contacts,
         private Location $departure,
@@ -23,6 +25,7 @@ final class Booking extends AggregateRoot
     }
 
     public static function create(
+        IndentifierInterface $identifier,
         Person $person,
         ContactsInterface $contacts,
         Location $departure,
@@ -41,6 +44,7 @@ final class Booking extends AggregateRoot
         }
 
         $booking = new self(
+            identifier: $identifier,
             person: $person,
             contacts: $contacts,
             departure: $departure,
@@ -49,7 +53,7 @@ final class Booking extends AggregateRoot
         );
 
         //todo record event here
-
+        
         return $booking;
     }
 }
