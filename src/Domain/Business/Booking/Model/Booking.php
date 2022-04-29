@@ -54,7 +54,7 @@ final class Booking extends AggregateRoot
         );
 
         //todo record event here
-        $booking->addEvent(new BookingCreatedEvent());
+        $booking->addEvent(new BookingCreatedEvent($booking->identifier->getIdentifier()));
         return $booking;
     }
 }
