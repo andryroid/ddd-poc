@@ -3,6 +3,7 @@
 namespace Domain\Business\Booking\Model;
 
 use Domain\Business\Booking\Collection\ContactsInterface;
+use Domain\Business\Booking\Event\BookingCreatedEvent;
 use Domain\Business\Booking\Exception\EmptyContactsException;
 use Domain\Business\Booking\Exception\InvalidBoookingDateException;
 use Domain\Business\Booking\Exception\InvalidDepartureException;
@@ -53,7 +54,7 @@ final class Booking extends AggregateRoot
         );
 
         //todo record event here
-        
+        $booking->addEvent(new BookingCreatedEvent());
         return $booking;
     }
 }
