@@ -6,10 +6,11 @@ use Infrastructure\Common\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/booking', methods: ['POST'], name: "api_booking_create")]
 final class BookTripController extends AbstractController
 {
-    #[Route('/booking', methods: ['POST'], name: "api_booking_create")]
-    public function bookTripAction(Request $request) {
+    
+    public function __invoke(Request $request) {
         $information = json_decode($request->getContent());
         return $this->responseManager->success($information);
     }
