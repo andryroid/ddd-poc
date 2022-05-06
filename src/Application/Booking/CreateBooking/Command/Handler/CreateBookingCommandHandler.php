@@ -2,7 +2,13 @@
 
 namespace Application\Booking\CreateBooking\Handler;
 
-final class CreateBookingCommandHandler  
-{
+use Application\Booking\CreateBooking\Command\CreateBookingCommand;
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
+final class CreateBookingCommandHandler implements MessageHandlerInterface
+{
+    public function __invoke(CreateBookingCommand $createBookingCommand)
+    {
+        
+    }
 }

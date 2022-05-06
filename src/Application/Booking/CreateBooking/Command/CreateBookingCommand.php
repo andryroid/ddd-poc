@@ -3,7 +3,6 @@
 namespace Application\Booking\CreateBooking\Command;
 
 use Domain\Business\Booking\Collection\ContactsInterface;
-use Domain\Business\Booking\Model\Booking;
 use Domain\Business\Booking\Model\Properties\Location;
 use Domain\Business\Booking\Model\Properties\Person;
 use Domain\Utils\Identifier\IndentifierInterface;
@@ -23,11 +22,18 @@ final class CreateBookingCommand
     ): void 
     {
         $this->indentifierInterface = $indentifierInterface;
+        //setup person
         $this->person = Person::build(
             $bookingData->person->first_name,
             $bookingData->person->last_name,
         );
+        //setup contacts
+        $this->contacts = $bookingData->contacts;
+        //setup location
+        $this->departure = Location::build($bookingData->departure);
+        //setup destination
+        $this->destination = Location::build($bookingData->destination);
+        //add departure time
+        $this->departureTime = $bookingData->departureTime;
     }
-}
-    
 }
