@@ -1,0 +1,19 @@
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        
+    Infrastructure\:
+        resource: '../../src/Infrastructure'
+        exclude:
+            - '../../src/DependencyInjection/'
+            - '../../src/Infrastructure/Entity/'
+            - '../../src/Infrastructure/Kernel.php'
+
+    Infrastructure\Controller\:
+        resource: '../../src/Infrastructure/Controller/'
+        tags: ['controller.service_arguments']
+
+    #in case of multiple injection
+    #Infrastructure\Common\Response\ResponseManagerInterface: <$your_var_here> '@Infrastructure\Common\Response\ResponseManager'
