@@ -9,31 +9,33 @@ use Domain\Utils\Identifier\IndentifierInterface;
 
 final class CreateBookingCommand
 {
-    public static IndentifierInterface $indentifierInterface;
-    public static  Person $person;
-    public static  ContactsInterface $contacts;
-    public static  Location $departure;
-    public static  Location $destination;
-    public static  \DateTime $departureTime;
+    public function __construct(
+        public readonly IndentifierInterface $indentifierInterface,
+        public readonly  Person $person,
+        public readonly  ContactsInterface $contacts,
+        public readonly  Location $departure,
+        public readonly  Location $destination,
+        public readonly  \DateTime $departureTime
+    )
+    {
+        
+    }
     
     public static function createBooking(
         IndentifierInterface $indentifierInterface,
         object $bookingData
-    ): void 
+    ): self 
     {
-        self::$indentifierInterface = $indentifierInterface;
-        //setup person
-        self::$person = Person::build(
-            $bookingData->person->first_name,
-            $bookingData->person->last_name,
+        return new CreateBookingCommand(
+            $indentifierInterface,
+            Person::build(
+                $bookingData->person->first_name,
+                $bookingData->person->last_name,
+            ),
+            $bookingData->contacts,
+            Location::build($bookingData->departure),
+            Location::build($bookingData->destination),
+            $bookingData->departureTime
         );
-        //setup contacts
-        self::$contacts = $bookingData->contacts;
-        //setup location
-        self::$departure = Location::build($bookingData->departure);
-        //setup destination
-        self::$destination = Location::build($bookingData->destination);
-        //add departure time
-        self::$departureTime = $bookingData->departureTime;
     }
 }
