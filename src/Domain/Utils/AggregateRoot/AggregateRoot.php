@@ -3,8 +3,8 @@
 namespace Domain\Utils\AggregateRoot;
 
 class AggregateRoot {
-    protected array $events;
+    protected static array $events;
     protected function addEvent(object $event) : mixed {
-        $this->events[] = $event;
+        self::$events[] = $event;
     }
 }
