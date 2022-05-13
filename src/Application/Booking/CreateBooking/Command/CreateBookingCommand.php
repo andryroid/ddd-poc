@@ -2,40 +2,55 @@
 
 namespace Application\Booking\CreateBooking\Command;
 
+use Application\DTO\Booking\Contacts;
 use Domain\Business\Booking\Collection\ContactsInterface;
-use Domain\Business\Booking\Model\Properties\Location;
-use Domain\Business\Booking\Model\Properties\Person;
-use Domain\Utils\Identifier\IndentifierInterface;
+use Domain\Utils\Identifier\Uuid\UuidIdentifierInterface;
+use InvalidArgumentException;
 
 final class CreateBookingCommand
 {
-    public function __construct(
-        public readonly IndentifierInterface $indentifierInterface,
-        public readonly  Person $person,
-        public readonly  ContactsInterface $contacts,
-        public readonly  Location $departure,
-        public readonly  Location $destination,
-        public readonly  \DateTime $departureTime
-    )
-    {
-        
+    private function __construct(
+        public readonly UuidIdentifierInterface $uuid,
+        public readonly string $firstName,
+        public readonly string $lastName,
+        public readonly ContactsInterface $contacts,
+        public readonly string $departure,
+        public readonly string $destination,
+        public readonly string $departureTime
+
+    ) {
     }
-    
-    public static function createBooking(
-        IndentifierInterface $indentifierInterface,
-        object $bookingData
-    ): self 
+
+    public static function fromArray(UuidIdentifierInterface $uuid, array $data): self
     {
-        return new CreateBookingCommand(
-            $indentifierInterface,
-            Person::build(
-                $bookingData->person->first_name,
-                $bookingData->person->last_name,
-            ),
-            $bookingData->contacts,
-            Location::build($bookingData->departure),
-            Location::build($bookingData->destination),
-            $bookingData->departureTime
+        self::validate($data);
+
+        return new self(
+            uuid: $uuid,
+            firstName: $data['firstName'],
+            lastName: $data['lastName'],
+            contacts: new Contacts($data['contacts']),
+            departure: $data['departure'],
+            destination: $data['destination'],
+            departureTime: $data['departureTime']
         );
     }
+
+    private static function validate(array $data): void
+    {
+        if (!isset(
+            $data['firstName'],
+            $data['lastName'],
+            $data['contacts'],
+            $data['departure'],
+            $data['destination'],
+            $data['departureTime']
+        )) {
+            throw new InvalidArgumentException('some data on payload missing');
+        }
+        if (!is_array($data['contacts'])) {
+            throw new InvalidArgumentException('contacts should be an array');
+        }
+    }
+
 }

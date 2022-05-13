@@ -3,20 +3,20 @@
 namespace Domain\Business\Booking\Model;
 
 use Domain\Business\Booking\Collection\ContactsInterface;
-use Domain\Business\Booking\Event\BookingCreatedEvent;
+use Domain\Business\Booking\Event\BookingWasCreated;
 use Domain\Business\Booking\Exception\EmptyContactsException;
 use Domain\Business\Booking\Exception\InvalidBoookingDateException;
 use Domain\Business\Booking\Exception\InvalidDepartureException;
+use Domain\Business\Booking\Model\Properties\BookingId;
 use Domain\Business\Booking\Model\Properties\Location;
 use Domain\Business\Booking\Model\Properties\Person;
 use Domain\Utils\AggregateRoot\AggregateRoot;
-use Domain\Utils\Identifier\IndentifierInterface;
 
 final class Booking extends AggregateRoot
 {
 
     private function __construct(
-        private IndentifierInterface $identifier,
+        private BookingId $uuid,
         private Person $person,
         private ContactsInterface $contacts,
         private Location $departure,
@@ -26,7 +26,7 @@ final class Booking extends AggregateRoot
     }
 
     public static function create(
-        IndentifierInterface $identifier,
+        BookingId $uuid,
         Person $person,
         ContactsInterface $contacts,
         Location $departure,
@@ -45,16 +45,15 @@ final class Booking extends AggregateRoot
         }
 
         $booking = new self(
-            identifier: $identifier,
+            uuid: $uuid,
             person: $person,
             contacts: $contacts,
             departure: $departure,
             destination: $destination,
             departureTime: $departureTime,
         );
+        $booking->addEvent(new BookingWasCreated($booking->uuid->generate()));
 
-        //todo record event here
-        $booking->addEvent(new BookingCreatedEvent($booking->identifier->getIdentifier()));
         return $booking;
     }
 }
