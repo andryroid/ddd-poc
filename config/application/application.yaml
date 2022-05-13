@@ -6,3 +6,7 @@ services:
     
     Application\:
         resource: '../../src/Application'
+
+    _instanceof:
+        Application\Shared\Handler\HandlerInterface:
+            tags: [messenger.message_handler]
