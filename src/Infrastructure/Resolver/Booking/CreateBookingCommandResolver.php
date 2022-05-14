@@ -2,7 +2,7 @@
 
 namespace Infrastructure\Resolver\Booking;
 
-use Application\Booking\CreateBooking\Command\CreateBookingCommand;
+use Application\Booking\Command\CreateBookingCommand;
 use Infrastructure\Common\Identifier\Uuid\UuidUuidIdentifier;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\HttpFoundation\Request;

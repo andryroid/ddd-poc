@@ -56,4 +56,12 @@ final class Booking extends AggregateRoot
 
         return $booking;
     }
+
+    /**
+     * @return BookingId
+     */
+    public function getUuid(): BookingId
+    {
+        return $this->uuid;
+    }
 }
