@@ -1,13 +1,16 @@
 <?php
 
-namespace Application\Booking\CreateBooking\Command;
+namespace Application\Booking\Command;
 
 use Application\DTO\Booking\Contacts;
 use Domain\Business\Booking\Collection\ContactsInterface;
 use Domain\Utils\Identifier\Uuid\UuidIdentifierInterface;
+use Domain\Utils\Message\Attributes\AsCommand;
+use Domain\Utils\Message\MessageInterface;
 use InvalidArgumentException;
 
-final class CreateBookingCommand
+#[AsCommand]
+final class CreateBookingCommand implements MessageInterface
 {
     private function __construct(
         public readonly UuidIdentifierInterface $uuid,

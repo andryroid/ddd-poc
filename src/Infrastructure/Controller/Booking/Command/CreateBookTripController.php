@@ -2,7 +2,7 @@
 
 namespace Infrastructure\Controller\Booking\Command;
 
-use Application\Booking\CreateBooking\Command\CreateBookingCommand;
+use Application\Booking\Command\CreateBookingCommand;
 use Infrastructure\Common\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

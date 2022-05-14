@@ -1,9 +1,9 @@
 <?php
 
-namespace Application\Booking\CreateBooking\Command\Handler;
+namespace Application\Booking\Command\Handler;
 
-use Application\Booking\CreateBooking\Command\CreateBookingCommand;
-use Application\Shared\Handler\HandlerInterface;
+use Application\Booking\Command\CreateBookingCommand;
+use Application\Shared\Message\Handler\CommandHandlerInterface;
 use DateTime;
 use Domain\Business\Booking\Model\Booking;
 use Domain\Business\Booking\Model\Properties\BookingId;
@@ -12,7 +12,7 @@ use Domain\Business\Booking\Model\Properties\Person;
 use Domain\Business\Booking\Repository\BookingRepositoryInterface;
 use Domain\Utils\Event\EventManagerInterface;
 
-final class CreateBookingCommandHandler implements HandlerInterface
+final class CreateBookingCommandCommandHandler implements CommandHandlerInterface
 {
 
     private function __construct(
