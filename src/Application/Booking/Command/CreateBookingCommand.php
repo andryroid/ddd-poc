@@ -57,7 +57,7 @@ final class CreateBookingCommand implements MessageInterface
         if (empty($data->departureTime)) {
             throw new InvalidArgumentException('Departure time invalid');
         }
-        if (!is_array($data['contacts'])) {
+        if (!is_array($data->contacts)) {
             throw new InvalidArgumentException('invalid contact : array of string');
         }
     }
