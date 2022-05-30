@@ -22,6 +22,4 @@ class Booking
     #[ORM\Column(type: 'string', length: 50)]
     private string $lastName;
 
-
-
 }
