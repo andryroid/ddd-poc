@@ -2,7 +2,6 @@
 
 namespace Domain\Business\Booking\Model;
 
-use Application\DTO\Booking\Contacts;
 use Domain\Business\Booking\Collection\ContactsInterface;
 use Domain\Business\Booking\Event\BookingWasCreated;
 use Domain\Business\Booking\Exception\EmptyContactsException;
@@ -12,12 +11,13 @@ use Domain\Business\Booking\Model\Properties\BookingId;
 use Domain\Business\Booking\Model\Properties\Location;
 use Domain\Business\Booking\Model\Properties\Person;
 use Domain\Utils\AggregateRoot\AggregateRoot;
+use Domain\Utils\Identifier\Uuid\UuidIdentifierInterface;
 
 final class Booking extends AggregateRoot
 {
 
     private function __construct(
-        private BookingId $uuid,
+        private UuidIdentifierInterface $uuid,
         private Person $person,
         private ContactsInterface $contacts,
         private Location $departure,
@@ -27,7 +27,7 @@ final class Booking extends AggregateRoot
     }
 
     public static function create(
-        BookingId $uuid,
+        UuidIdentifierInterface $uuid,
         Person $person,
         ContactsInterface $contacts,
         Location $departure,
@@ -66,7 +66,8 @@ final class Booking extends AggregateRoot
         return $this->uuid;
     }
 
-    public function getSummary() : array {
+    public function getSummary(): array
+    {
         return [
             "uuid" => $this->uuid->getStringValue(),
             "person" => [

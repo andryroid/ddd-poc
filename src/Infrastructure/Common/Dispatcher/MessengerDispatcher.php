@@ -28,7 +28,7 @@ final class MessengerDispatcher implements MessageDispatcherInterface, ServiceSu
     private function getBus(MessageInterface $message): MessageBusInterface
     {
         $class = new \ReflectionClass($message);
-        $attributes = $class->getAttributes(BusInterface::class);
+        $attributes = $class->getAttributes();
         /** @var ?BusInterface $busType */
         $busType = isset($attributes[0]) ? $attributes[0]->newInstance() : null;
 

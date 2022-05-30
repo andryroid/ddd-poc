@@ -8,7 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Domain\Business\Booking\Model\Booking as DomainBooking;
 use Domain\Business\Booking\Model\Properties\BookingId;
 use Domain\Business\Booking\Repository\BookingRepositoryInterface;
-use Infrastructure\Service\Transformer\Booking\BookingTransformer;
+use Infrastructure\Entity\Booking\Booking;
 
 /**
  * @extends ServiceEntityRepository<Booking>
