@@ -21,7 +21,7 @@ class BookingRepository extends ServiceEntityRepository implements BookingReposi
     public function save(DomainBooking $domainBooking): BookingId
     {
         $booking = $this->bookingTransformer->fromDomainToDb($domainBooking);
-        $this->_em->persist($booking);
+        //$this->_em->persist($booking);
 
         return $domainBooking->getUuid();
     }
