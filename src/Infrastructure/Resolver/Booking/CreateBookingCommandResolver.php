@@ -3,7 +3,7 @@
 namespace Infrastructure\Resolver\Booking;
 
 use Application\Booking\Command\CreateBookingCommand;
-use Infrastructure\Common\Identifier\Uuid\UuidUuidIdentifier;
+use Infrastructure\Common\Identifier\Uuid\UuidIdentifier;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
@@ -25,7 +25,7 @@ class CreateBookingCommandResolver implements ArgumentValueResolverInterface
     {
         $data = json_decode($request->getContent());
 
-        yield CreateBookingCommand::fromArray(UuidUuidIdentifier::generate(), $data);
+        yield CreateBookingCommand::fromArray(UuidIdentifier::generate(), $data);
     }
 
 }
