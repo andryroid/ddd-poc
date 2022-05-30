@@ -15,7 +15,7 @@ use Domain\Utils\Event\EventManagerInterface;
 final class CreateBookingCommandCommandHandler implements CommandHandlerInterface
 {
 
-    private function __construct(
+    public function __construct(
         private readonly EventManagerInterface $eventManager,
         private readonly BookingRepositoryInterface $bookingRepository
     ) {
