@@ -9,3 +9,5 @@ services:
 
     Domain\Utils\Event\EventManagerInterface: '@Infrastructure\Service\Event\EventManager'
     Domain\Business\Booking\Repository\BookingRepositoryInterface: '@Infrastructure\Repository\Booking'
+    Domain\Business\Booking\Repository: '@Infrastructure\Entity\Booking\Transformer\BookingTransformer'
+
