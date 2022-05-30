@@ -42,16 +42,6 @@ final class CreateBookingCommand implements MessageInterface
 
     private static function validate(stdClass $data): void
     {
-        if (!isset(
-            $data['firstName'],
-            $data['lastName'],
-            $data['contacts'],
-            $data['departure'],
-            $data['destination'],
-            $data['departureTime']
-        )) {
-            throw new InvalidArgumentException('some data on payload missing');
-        }
         if (empty($data->firstName)) {
             throw new InvalidArgumentException('Fist name');
         }
