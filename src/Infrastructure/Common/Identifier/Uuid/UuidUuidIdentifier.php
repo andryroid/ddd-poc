@@ -10,7 +10,7 @@ final class UuidIdentifier implements UuidIdentifierInterface
 {
     public function __construct(private string $uuid)
     {
-        $this->uuid = new((string)Uuid::v4());
+        $this->uuid = Uuid::v4();
     }
 
     public function isValid(string $uuid): bool
