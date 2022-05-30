@@ -6,8 +6,8 @@ services:
 
   Application\:
     resource: '../../src/Application'
-  
-  Application\Booking\Transformer\BookingTransformerInterface : '@Infrastructure\Entity\Booking\Transformer\BookingTransformer'
+
+  Application\Booking\Transformer\BookingTransformerInterface : '@Infrastructure\Service\Transformer\Booking\BookingTransformer'
 
   _instanceof:
     Application\Shared\Message\Handler\CommandHandlerInterface:
