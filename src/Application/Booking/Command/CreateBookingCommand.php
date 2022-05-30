@@ -8,6 +8,7 @@ use Domain\Utils\Identifier\Uuid\UuidIdentifierInterface;
 use Domain\Utils\Message\Attributes\AsCommand;
 use Domain\Utils\Message\MessageInterface;
 use InvalidArgumentException;
+use stdClass;
 
 #[AsCommand]
 final class CreateBookingCommand implements MessageInterface
@@ -24,7 +25,7 @@ final class CreateBookingCommand implements MessageInterface
     ) {
     }
 
-    public static function fromArray(UuidIdentifierInterface $uuid, array $data): self
+    public static function fromArray(UuidIdentifierInterface $uuid, stdClass $data): self
     {
         self::validate($data);
 
@@ -39,7 +40,7 @@ final class CreateBookingCommand implements MessageInterface
         );
     }
 
-    private static function validate(array $data): void
+    private static function validate(stdClass $data): void
     {
         if (!isset(
             $data['firstName'],
@@ -51,8 +52,23 @@ final class CreateBookingCommand implements MessageInterface
         )) {
             throw new InvalidArgumentException('some data on payload missing');
         }
+        if (empty($data->firstName)) {
+            throw new InvalidArgumentException('Fist name');
+        }
+        if (empty($data->lastName)) {
+            throw new InvalidArgumentException('Last name');
+        }
+        if (empty($data->departure)) {
+            throw new InvalidArgumentException('Departure invalid');
+        }
+        if (empty($data->destination)) {
+            throw new InvalidArgumentException('Destination invalid');
+        }
+        if (empty($data->departureTime)) {
+            throw new InvalidArgumentException('Departure time invalid');
+        }
         if (!is_array($data['contacts'])) {
-            throw new InvalidArgumentException('contacts should be an array');
+            throw new InvalidArgumentException('invalid contact : array of string');
         }
     }
 
