@@ -31,12 +31,12 @@ final class CreateBookingCommand implements MessageInterface
 
         return new self(
             uuid: $uuid,
-            firstName: $data['firstName'],
-            lastName: $data['lastName'],
-            contacts: new Contacts($data['contacts']),
-            departure: $data['departure'],
-            destination: $data['destination'],
-            departureTime: $data['departureTime']
+            firstName: $data->firstName,
+            lastName: $data->lastName,
+            contacts: new Contacts($data->contacts),
+            departure: $data->departure,
+            destination: $data->destination,
+            departureTime: $data->departureTime
         );
     }
 
