@@ -3,10 +3,11 @@
 namespace Infrastructure\Entity\Booking;
 
 use Doctrine\ORM\Mapping as ORM;
+use Domain\Utils\Entity\EntityInterface;
 use Infrastructure\Repository\Booking\BookingRepository;
 
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
-class Booking
+class Booking implements EntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

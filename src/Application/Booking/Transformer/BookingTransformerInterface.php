@@ -7,5 +7,5 @@ use Domain\Utils\Entity\EntityInterface;
 
 interface BookingTransformerInterface
 {
-    public function fromDomainToDb(DomainBooking $domainBooking): string;
+    public function fromDomainToDb(DomainBooking $domainBooking): EntityInterface;
 }

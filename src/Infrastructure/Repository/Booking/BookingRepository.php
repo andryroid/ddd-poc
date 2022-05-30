@@ -2,9 +2,13 @@
 
 namespace Infrastructure\Repository\Booking;
 
+use Application\Booking\Transformer\BookingTransformerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Infrastructure\Entity\Booking\Booking;
+use Domain\Business\Booking\Model\Booking as DomainBooking;
+use Domain\Business\Booking\Model\Properties\BookingId;
+use Domain\Business\Booking\Repository\BookingRepositoryInterface;
+use Infrastructure\Service\Transformer\Booking\BookingTransformer;
 
 /**
  * @extends ServiceEntityRepository<Booking>
@@ -14,53 +18,17 @@ use Infrastructure\Entity\Booking\Booking;
  * @method Booking[]    findAll()
  * @method Booking[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class BookingRepository extends ServiceEntityRepository
+class BookingRepository extends ServiceEntityRepository implements BookingRepositoryInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry,private BookingTransformerInterface $bookingTransformerInterface)
     {
         parent::__construct($registry, Booking::class);
     }
 
-    public function add(Booking $entity, bool $flush = false): void
+    public function save(DomainBooking $domainBooking) : BookingId
     {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $entityBooking = $this->bookingTransformerInterface->fromDomainToDb($domainBooking);
+        $this->_em->persist($entityBooking);
+        return $domainBooking->getUuid();
     }
-
-    public function remove(Booking $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-//    /**
-//     * @return Booking[] Returns an array of Booking objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Booking
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

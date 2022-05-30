@@ -2,6 +2,7 @@
 
 namespace Domain\Business\Booking\Model;
 
+use Application\DTO\Booking\Contacts;
 use Domain\Business\Booking\Collection\ContactsInterface;
 use Domain\Business\Booking\Event\BookingWasCreated;
 use Domain\Business\Booking\Exception\EmptyContactsException;
@@ -63,5 +64,19 @@ final class Booking extends AggregateRoot
     public function getUuid(): BookingId
     {
         return $this->uuid;
+    }
+
+    public function getSummary() : array {
+        return [
+            "uuid" => $this->uuid->getStringValue(),
+            "person" => [
+                "first_name" => $this->person->firstName,
+                "last_name" => $this->person->lastName
+            ],
+            "contacts" => $this->contacts,
+            "departure" => $this->departure->locationName,
+            "destination" => $this->destination->locationName,
+            "departure_time" => $this->departureTime->format
+        ];
     }
 }

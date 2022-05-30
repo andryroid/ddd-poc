@@ -17,7 +17,7 @@ final class CreateBookingCommandCommandHandler implements CommandHandlerInterfac
 
     public function __construct(
         private readonly EventManagerInterface $eventManager,
-        //private readonly BookingRepositoryInterface $bookingRepository
+        private readonly BookingRepositoryInterface $bookingRepository
     ) {
     }
 
