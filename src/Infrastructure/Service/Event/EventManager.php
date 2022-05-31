@@ -2,13 +2,14 @@
 
 namespace Infrastructure\Service\Event;
 
+use Application\Shared\EventManager\AggregateCollection;
 use Domain\Utils\AggregateRoot\AggregateRoot;
 use Domain\Utils\Collection\AggregateCollectionInterface;
 use Domain\Utils\Event\EventManagerInterface;
 
 class EventManager implements EventManagerInterface
 {
-    private AggregateCollectionInterface $aggregates;
+    private AggregateCollection $aggregates;
 
     public function __construct()
     {
