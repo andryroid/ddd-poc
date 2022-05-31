@@ -6,7 +6,7 @@ use Domain\Utils\Identifier\Uuid\UuidIdentifierInterface;
 use LogicException;
 use Symfony\Component\Uid\Uuid;
 
-class UuidIdentifier implements UuidIdentifierInterface
+abstract class  UuidIdentifier implements UuidIdentifierInterface
 {
     public function __construct(private string $uuid)
     {
@@ -18,11 +18,8 @@ class UuidIdentifier implements UuidIdentifierInterface
         return Uuid::v4()::isValid($uuid);
     }
 
-    public static function generate(): UuidIdentifierInterface
-    {
-        return new self("");
-    }
-
+    abstract static function generate(): UuidIdentifierInterface;
+    
     public function fromString(string $uuid): UuidIdentifierInterface
     {
         if (self::isValid($uuid)) {
