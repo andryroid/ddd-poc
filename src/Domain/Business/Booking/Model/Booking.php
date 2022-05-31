@@ -69,7 +69,7 @@ final class Booking extends AggregateRoot
     public function getSummary(): array
     {
         return [
-            "uuid" => $this->uuid->getStringValue(),
+            "uuid" => $this->uuid,
             "person" => [
                 "first_name" => $this->person->firstName,
                 "last_name" => $this->person->lastName
