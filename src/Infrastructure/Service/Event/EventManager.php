@@ -9,11 +9,9 @@ use Domain\Utils\Event\EventManagerInterface;
 
 class EventManager implements EventManagerInterface
 {
-    private AggregateCollection $aggregates;
-
-    public function __construct()
+    public function __construct(private AggregateCollectionInterface $aggregates)
     {
-        $this->aggregates = [];
+        
     }
 
     public function persist(AggregateRoot $aggregateRoot): void
