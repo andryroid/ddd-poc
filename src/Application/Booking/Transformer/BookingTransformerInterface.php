@@ -3,9 +3,9 @@
 namespace Application\Booking\Transformer;
 
 use Domain\Business\Booking\Model\Booking as DomainBooking;
-use Domain\Utils\Entity\EntityInterface;
+use Infrastructure\Entity\Booking\Booking as EntityBooking;
 
 interface BookingTransformerInterface
 {
-    public function fromDomainToDb(DomainBooking $domainBooking): EntityInterface;
+    public function fromDomainToDb(DomainBooking $domainBooking): EntityBooking;
 }
