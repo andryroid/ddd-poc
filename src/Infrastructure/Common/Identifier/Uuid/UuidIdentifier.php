@@ -10,7 +10,7 @@ abstract class  UuidIdentifier implements UuidIdentifierInterface
 {
     public function __construct(private string $uuid)
     {
-        $this->uuid = Uuid::v4();
+        $this->uuid = $uuid."_".Uuid::v4();
     }
 
     public function isValid(string $uuid): bool

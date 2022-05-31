@@ -22,7 +22,7 @@ final class MessengerDispatcher implements MessageDispatcherInterface, ServiceSu
         $envelop = $this->getBus($message)->dispatch($message);
         /** @var HandledStamp $stamp */
         $stamp = $envelop->last(HandledStamp::class);
-        return $stamp->getResult();
+        return $stamp?->getResult();
     }
 
     private function getBus(MessageInterface $message): MessageBusInterface

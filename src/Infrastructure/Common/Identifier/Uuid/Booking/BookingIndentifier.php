@@ -8,8 +8,9 @@ use Infrastructure\Common\Identifier\Uuid\UuidIdentifier;
 
 final class BookingIdentifier extends UuidIdentifier implements BookingId
 {
+    private const PREFIX = "bkn";
     public static function generate(): UuidIdentifierInterface
     {
-        return new self("");
+        return new self(self::PREFIX);
     }
 }
