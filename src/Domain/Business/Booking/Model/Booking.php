@@ -77,7 +77,7 @@ final class Booking extends AggregateRoot
             "contacts" => $this->contacts,
             "departure" => $this->departure->locationName,
             "destination" => $this->destination->locationName,
-            "departure_time" => $this->departureTime->format
+            "departure_time" => $this->departureTime->format("Y:m:d h:i:s")
         ];
     }
 }

@@ -19,4 +19,12 @@ final class Contact
         }
         return new self(type: $type, value: $value);
     }
+
+    public function toArray() : array 
+    {
+        return [
+            "type" => $this->type,
+            "value" => $this->value
+        ];
+    }
 }
