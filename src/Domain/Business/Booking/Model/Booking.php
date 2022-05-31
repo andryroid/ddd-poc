@@ -38,11 +38,11 @@ final class Booking extends AggregateRoot
             throw new EmptyContactsException("You need to specify at least one contact information");
         }
         if ($departure->isEqual($destination)) {
-            throw new InvalidDepartureException("Destination is equal to Departure");
+            throw new InvalidDepartureException("Destination cannot be equal to Departure");
         }
         //Cannot book a trip in the past
         if (new \DateTime() > $departureTime) {
-            throw new InvalidBoookingDateException("Destination is equal to Departure");
+            throw new InvalidBoookingDateException("Cannot book a trip in the past");
         }
 
         $booking = new self(
