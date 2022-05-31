@@ -15,9 +15,9 @@ final class BookingTransformer implements BookingTransformerInterface
         return (new EntityBooking())
             ->setUuid($dataFromDomain['uuid'])
             ->setPerson($dataFromDomain['person'])
-            ->setContacts(array_map(fn(Contacts $contact) => $contact->toArray(),$dataFromDomain['contacts']))
+            ->setContacts(array_map(fn(Contacts $contact) => $contact->toArray(),json_decode(json_encode($dataFromDomain['contacts']),true)))
             ->setDeparture($dataFromDomain['departure'])
             ->setDestination($dataFromDomain['destination'])
-            ->setDepartureAt($dataFromDomain['departure_at']);
+            ->setDepartureAt($dataFromDomain['departure_time']);
     }
 }
