@@ -10,6 +10,11 @@ class EventManager implements EventManagerInterface
 {
     private AggregateCollectionInterface $aggregates;
 
+    public function __construct()
+    {
+        $this->aggregates = [];
+    }
+
     public function persist(AggregateRoot $aggregateRoot): void
     {
         $this->aggregates->add($aggregateRoot);
