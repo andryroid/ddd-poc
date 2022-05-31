@@ -6,7 +6,7 @@ use Domain\Utils\Identifier\Uuid\UuidIdentifierInterface;
 use LogicException;
 use Symfony\Component\Uid\Uuid;
 
-final class UuidIdentifier implements UuidIdentifierInterface
+class UuidIdentifier implements UuidIdentifierInterface
 {
     public function __construct(private string $uuid)
     {

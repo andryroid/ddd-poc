@@ -14,7 +14,6 @@ use Domain\Business\Booking\Model\Properties\Location;
 use Domain\Business\Booking\Model\Properties\Person;
 use Domain\Business\Booking\Repository\BookingRepositoryInterface;
 use Domain\Utils\Event\EventManagerInterface;
-use stdClass;
 
 final class CreateBookingCommandHandler implements CommandHandlerInterface
 {
@@ -35,9 +34,7 @@ final class CreateBookingCommandHandler implements CommandHandlerInterface
             destination: Location::build($command->destination),
             departureTime: new DateTime($command->departureTime)
         );
-
         $this->eventManager->persist($booking);
-
         return $this->bookingRepository->save($booking);
     }
 
