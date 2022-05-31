@@ -14,6 +14,7 @@ use Domain\Business\Booking\Model\Properties\Location;
 use Domain\Business\Booking\Model\Properties\Person;
 use Domain\Business\Booking\Repository\BookingRepositoryInterface;
 use Domain\Utils\Event\EventManagerInterface;
+use stdClass;
 
 final class CreateBookingCommandHandler implements CommandHandlerInterface
 {
@@ -42,10 +43,11 @@ final class CreateBookingCommandHandler implements CommandHandlerInterface
 
     private function manageContacts(Contacts $contacts): Contacts
     {
+        $contacts = json_decode(json_encode($contacts->toArray()),true);
         return new Contacts(
             array_map(
                 fn(array $item) => Contact::build(type: ContactType::build($item['type']), value: $item['value']),
-                $contacts->toArray()
+                $contacts
             )
         );
     }
