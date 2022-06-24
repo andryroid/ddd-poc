@@ -10,16 +10,19 @@ services:
       # You should definitely change the password in production
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ddd}
       POSTGRES_USER: ${POSTGRES_USER:-ddd}
+      PORTS:
+        ""
     volumes:
       - db-data:/var/lib/postgresql/data:rw
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./docker/db/data:/var/lib/postgresql/data:rw
   application:
-      image: lalaina/pocddd:latest
-      environment:
-        DATABASE_URL: "postgresql://ddd:ddd@127.0.0.1:8001/app?serverVersion=13&charset=utf8"
-
-###< doctrine/doctrine-bundle ###
+    image: lalaina/pocddd:latest
+    environment:
+      DATABASE_URL: "postgresql://ddd:ddd@127.0.0.1:5432/ddd?serverVersion=13&charset=utf8"
+    depends_on:
+      - database
+      ###< doctrine/doctrine-bundle ###
 
 volumes:
   ###> doctrine/doctrine-bundle ###
