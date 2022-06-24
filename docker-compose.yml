@@ -6,7 +6,7 @@ services:
   database:
     image: postgres:${POSTGRES_VERSION:-13}-alpine
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_DB: ${POSTGRES_DB:-ddd}
       # You should definitely change the password in production
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ddd}
       POSTGRES_USER: ${POSTGRES_USER:-ddd}
@@ -17,7 +17,7 @@ services:
   application:
       image: lalaina/pocddd:latest
       environment:
-        DATABASE_URL: "postgresql://ddd:ddd@127.0.0.1:5432/app?serverVersion=13&charset=utf8"
+        DATABASE_URL: "postgresql://ddd:ddd@127.0.0.1:8001/app?serverVersion=13&charset=utf8"
 
 ###< doctrine/doctrine-bundle ###
 
