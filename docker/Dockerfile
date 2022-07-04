@@ -5,7 +5,7 @@ RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && mv com
 RUN apt update
 COPY . /var/www/
 COPY ./docker/apache.conf /etc/apache2/sites-available/000-default.conf
-RUN cd /var/www
 WORKDIR /var/www/
+RUN cd /var/www && php bin/console d:d:c && php bin/console d:m:m
 #ENTRYPOINT ["bash", "./docker/docker.sh"]
 EXPOSE 80
