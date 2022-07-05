@@ -5,9 +5,9 @@ services:
   mysql:
     image: mysql:8
     ports:
-      - 3306:3306
+      - 8002:3306
     volumes:
-      - .:/var/lib/mysql
+      - db-data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=admin
       - MYSQL_PASSWORD=devinsider
@@ -21,3 +21,5 @@ services:
       - 8001:8080
     depends_on:
       - mysql
+volumes:
+  db-data:
