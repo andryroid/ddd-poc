@@ -27,6 +27,8 @@ services:
       context: .
       dockerfile: ./docker/Dockerfile
     image: lalaina/ddd
+    depends_on:
+      - mysql
     ports:
       - 8003:80
     environment:

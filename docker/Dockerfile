@@ -4,7 +4,7 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 RUN chmod +x /usr/local/bin/install-php-extensions && install-php-extensions pdo_mysql intl zip
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && mv composer.phar /usr/local/bin/composer
 COPY . /var/www/
-COPY apache.conf /etc/apache2/sites-available/000-default.conf
+COPY ./docker/apache.conf /etc/apache2/sites-available/000-default.conf
 WORKDIR /var/www/
 RUN cd /var/www/
 RUN composer require symfony/runtime
