@@ -5,7 +5,7 @@ services:
   mysql:
     image: mysql:8
     ports:
-      - 8002:3306
+      - 8001:3306
     volumes:
       - db-data:/var/lib/mysql
     environment:
@@ -18,8 +18,18 @@ services:
     image: adminer
     restart: on-failure
     ports:
-      - 8001:8080
+      - 8002:8080
     depends_on:
       - mysql
+
+  booking:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    image: lalaina/ddd
+    ports:
+      - 8003:80
+    environment:
+      - DATABASE_URL=mysql://devinsider:devinsider@mysql:8001/dt?serverVersion=5.7&charset=utf8mb4
 volumes:
   db-data:
