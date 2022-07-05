@@ -2,37 +2,22 @@
 version: '3'
 
 services:
-  ###> doctrine/doctrine-bundle ###
-  database:
-    image: mysql
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
+  mysql:
+    image: mysql:8
+    ports:
+      - 3306:3306
+    volumes:
+      - .:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: dt
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_PASSWORD=devinsider
+      - MYSQL_USER=devinsider
+      - MYSQL_DATABASE=dt
 
   adminer:
     image: adminer
-    restart: always
+    restart: on-failure
     ports:
       - 8001:8080
     depends_on:
-      - database
-
-  app:
-    build:
-      context: ./docker
-      dockerfile: Dockerfile
-    image: lalaina/ddd
-    depends_on:
-      - database
-    environment:
-      - DATABASE_URL=mysql://root:admin@database:3306/dt
-    volumes:
-      - .:/var/www
-      ###< doctrine/doctrine-bundle ###
-
-volumes:
-  ###> doctrine/doctrine-bundle ###
-  db-data:
-###< doctrine/doctrine-bundle ###
+      - mysql
