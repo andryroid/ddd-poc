@@ -2,36 +2,36 @@
 version: '3'
 
 services:
-  mysql:
-    image: mysql:8
+  postgres:
+    image: postgres
+    restart: always
     ports:
-      - 8001:3306
-    volumes:
-      - db-data:/var/lib/mysql
+      - 5432:5432
     environment:
-      - MYSQL_ROOT_PASSWORD=admin
-      - MYSQL_PASSWORD=devinsider
-      - MYSQL_USER=devinsider
-      - MYSQL_DATABASE=dt
+      - POSTGRES_USER=booking
+      - POSTGRES_PASSWORD=booking
+      - POSTGRES_DB=dt
 
   adminer:
     image: adminer
-    restart: on-failure
+    restart: always
     ports:
       - 8002:8080
     depends_on:
-      - mysql
+      - postgres
 
   booking:
     build:
       context: .
       dockerfile: ./docker/Dockerfile
     image: lalaina/ddd
+    command: bash -c "/wait-for-it.sh postgres:5432 -s -- php bin/console d:m:m"
+    restart: always
+    volumes:
+      - .:/var/www/
     depends_on:
-      - mysql
+      - postgres
     ports:
-      - 8003:80
+      - 8001:80
     environment:
-      - DATABASE_URL=mysql://devinsider:devinsider@mysql:8001/dt?serverVersion=5.7&charset=utf8mb4
-volumes:
-  db-data:
+      - DATABASE_URL=postgresql://booking:booking@postgres:5432/dt
