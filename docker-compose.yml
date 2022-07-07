@@ -1,16 +1,17 @@
 
-version: '3'
+version: "3.3"
 
 services:
-  postgres:
-    image: postgres
+  database:
+    image: mysql:8
     restart: always
     ports:
-      - 5432:5432
+      - 8003:3306
     environment:
-      - POSTGRES_USER=booking
-      - POSTGRES_PASSWORD=booking
-      - POSTGRES_DB=dt
+      - MYSQL_USER=booking
+      - MYSQL_PASSWORD=booking
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=dt
 
   adminer:
     image: adminer
@@ -18,20 +19,20 @@ services:
     ports:
       - 8002:8080
     depends_on:
-      - postgres
+      - database
 
   booking:
+    entrypoint: sh -cx "/wait-for-it.sh database:8003 -s -- php /var/www/bin/console d:m:m --no-interaction"
     build:
       context: .
       dockerfile: ./docker/Dockerfile
     image: lalaina/ddd
-    command: bash -c "/wait-for-it.sh postgres:5432 -s -- php bin/console d:m:m"
     restart: always
     volumes:
       - .:/var/www/
     depends_on:
-      - postgres
+      - database
     ports:
       - 8001:80
     environment:
-      - DATABASE_URL=postgresql://booking:booking@postgres:5432/dt
+      - DATABASE_URL=mysql://booking:booking@database:3306/dt
