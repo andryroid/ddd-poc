@@ -22,7 +22,7 @@ services:
       - database
 
   booking:
-    entrypoint: sh -cx "/wait-for-it.sh database:8003 -s -- php /var/www/bin/console d:m:m --no-interaction"
+    #entrypoint: sh -cx "/wait-for-it.sh database:8003 -s -- php /var/www/bin/console d:m:m --no-interaction"
     build:
       context: .
       dockerfile: ./docker/Dockerfile
