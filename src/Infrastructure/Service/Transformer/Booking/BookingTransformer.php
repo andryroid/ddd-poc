@@ -18,6 +18,7 @@ final class BookingTransformer implements BookingTransformerInterface
             ->setContacts(array_map(fn(Contacts $contact) => $contact->toArray(),json_decode(json_encode($dataFromDomain['contacts']),true)))
             ->setDeparture($dataFromDomain['departure'])
             ->setDestination($dataFromDomain['destination'])
+            ->setBookedAt($dataFromDomain['booked_at'])
             ->setDepartureAt($dataFromDomain['departure_time']);
     }
 }

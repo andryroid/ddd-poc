@@ -31,6 +31,9 @@ class Booking
     #[ORM\Column(type: 'datetime')]
     private $departure_at;
 
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $booked_at;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +107,18 @@ class Booking
     public function setDepartureAt(\DateTimeInterface $departure_at): self
     {
         $this->departure_at = $departure_at;
+
+        return $this;
+    }
+
+    public function getBookedAt(): ?\DateTimeImmutable
+    {
+        return $this->booked_at;
+    }
+
+    public function setBookedAt(\DateTimeImmutable $booked_at): self
+    {
+        $this->booked_at = $booked_at;
 
         return $this;
     }
