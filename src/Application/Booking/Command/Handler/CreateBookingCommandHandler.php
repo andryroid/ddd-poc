@@ -40,8 +40,6 @@ final class CreateBookingCommandHandler implements CommandHandlerInterface
         //check availability
         if (!$this->bookingAvailability->isAvailable($booking))
             throw new BookingUnavailableException("Booking unavailable");
-
-
         $this->eventManager->persist($booking);
         return $this->bookingRepository->save($booking);
     }

@@ -31,4 +31,18 @@ class BookingRepository extends ServiceEntityRepository implements BookingReposi
         $this->_em->persist($entityBooking);
         return $domainBooking->getUuid();
     }
+
+    public function findIfAlreadyExists(DomainBooking $domainBooking) : bool
+    {
+        $dataBooking = $domainBooking->getSummary();
+        $query = $this->createQueryBuilder('booking')
+            ->where("booking.departure = :departure")
+            ->andWhere("booking.destination = :destination")
+            ->andWhere("DATE(booking.departure_at) = :departure_at")
+            ->setParameter("departure", $domainBooking['departure'])
+            ->setParameter("destination",$domainBooking['destination'])
+            ->setParameter("departure_at",$domainBooking['departure_time'])
+            ->getQuery()->getResult();
+        return count($query) > 0;
+    }
 }
