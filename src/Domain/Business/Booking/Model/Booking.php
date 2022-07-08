@@ -6,7 +6,7 @@ use Domain\Business\Booking\Collection\ContactsInterface;
 use Domain\Business\Booking\Event\BookingWasCreated;
 use Domain\Business\Booking\Exception\EmptyContactsException;
 use Domain\Business\Booking\Exception\InvalidBoookingDateException;
-use Domain\Business\Booking\Exception\InvalidDepartureException;
+use Domain\Business\Booking\Exception\BookingUnavailableException;
 use Domain\Business\Booking\Model\Properties\BookingId;
 use Domain\Business\Booking\Model\Properties\Location;
 use Domain\Business\Booking\Model\Properties\Person;
@@ -40,7 +40,7 @@ final class Booking extends AggregateRoot
             throw new EmptyContactsException("You need to specify at least one contact information");
         }
         if ($departure->isEqual($destination)) {
-            throw new InvalidDepartureException("Destination cannot be equal to Departure");
+            throw new BookingUnavailableException("Destination cannot be equal to Departure");
         }
         //Cannot book a trip in the past
         if (new \DateTime() > $departureTime) {

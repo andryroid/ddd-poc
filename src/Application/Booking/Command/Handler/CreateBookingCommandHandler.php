@@ -6,6 +6,7 @@ use Application\Booking\Command\CreateBookingCommand;
 use Application\DTO\Booking\Contacts;
 use Application\Shared\Message\Handler\CommandHandlerInterface;
 use DateTime;
+use Domain\Business\Booking\Exception\BookingUnavailableException;
 use Domain\Business\Booking\Model\Booking;
 use Domain\Business\Booking\Model\Properties\BookingId;
 use Domain\Business\Booking\Model\Properties\Contact;
@@ -13,6 +14,7 @@ use Domain\Business\Booking\Model\Properties\ContactType;
 use Domain\Business\Booking\Model\Properties\Location;
 use Domain\Business\Booking\Model\Properties\Person;
 use Domain\Business\Booking\Repository\BookingRepositoryInterface;
+use Domain\Business\Booking\Service\BookingAvailability;
 use Domain\Utils\Event\EventManagerInterface;
 
 final class CreateBookingCommandHandler implements CommandHandlerInterface
@@ -20,7 +22,8 @@ final class CreateBookingCommandHandler implements CommandHandlerInterface
 
     public function __construct(
         private readonly EventManagerInterface $eventManager,
-        private readonly BookingRepositoryInterface $bookingRepository
+        private readonly BookingRepositoryInterface $bookingRepository,
+        private readonly BookingAvailability $bookingAvailability
     ) {
     }
 
@@ -34,6 +37,11 @@ final class CreateBookingCommandHandler implements CommandHandlerInterface
             destination: Location::build($command->destination),
             departureTime: new DateTime($command->departureTime)
         );
+        //check availability
+        if (!$this->bookingAvailability->isAvailable($booking))
+            throw new BookingUnavailableException("Booking unavailable");
+
+
         $this->eventManager->persist($booking);
         return $this->bookingRepository->save($booking);
     }

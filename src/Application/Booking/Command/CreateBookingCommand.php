@@ -21,14 +21,14 @@ final class CreateBookingCommand implements MessageInterface
         public readonly string $departure,
         public readonly string $destination,
         public readonly string $departureTime
-
     ) {
     }
 
     public static function fromArray(UuidIdentifierInterface $uuid, stdClass $data): self
     {
-        self::validate($data);
-
+        //check data first
+        self::validateMetadata($data);
+        //check availability
         return new self(
             uuid: $uuid,
             firstName: $data->firstName,
@@ -40,7 +40,7 @@ final class CreateBookingCommand implements MessageInterface
         );
     }
 
-    private static function validate(stdClass $data): void
+    private static function validateMetadata(stdClass $data): void
     {
         if (empty($data->firstName)) {
             throw new InvalidArgumentException('Fist name');
@@ -61,5 +61,4 @@ final class CreateBookingCommand implements MessageInterface
             throw new InvalidArgumentException('invalid contact : array of string');
         }
     }
-
 }
