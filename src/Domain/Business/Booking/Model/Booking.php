@@ -22,7 +22,8 @@ final class Booking extends AggregateRoot
         private ContactsInterface $contacts,
         private Location $departure,
         private Location $destination,
-        private \DateTime $departureTime
+        private \DateTime $departureTime,
+        private \DateTimeImmutable $bookedAt
     ) {
     }
 
@@ -52,6 +53,7 @@ final class Booking extends AggregateRoot
             departure: $departure,
             destination: $destination,
             departureTime: $departureTime,
+            bookedAt: \DateTimeImmutable::createFromMutable(new \DateTime())
         );
         $booking->addEvent(new BookingWasCreated($booking->uuid->generate()));
 

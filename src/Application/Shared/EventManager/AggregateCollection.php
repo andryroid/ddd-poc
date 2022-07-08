@@ -14,7 +14,7 @@ final class AggregateCollection implements AggregateCollectionInterface {
     }
     public function add(AggregateRoot $aggregateRoot): static 
     {
-        array_push($this->aggregates,$aggregateRoot);
+        $this->aggregates[] = $aggregateRoot;
         return new static();
     }
 
