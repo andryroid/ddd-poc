@@ -12,6 +12,7 @@ use Domain\Business\Booking\Model\Properties\Location;
 use Domain\Business\Booking\Model\Properties\Person;
 use Domain\Utils\AggregateRoot\AggregateRoot;
 use Domain\Utils\Identifier\Uuid\UuidIdentifierInterface;
+use JetBrains\PhpStorm\ArrayShape;
 
 final class Booking extends AggregateRoot
 {
