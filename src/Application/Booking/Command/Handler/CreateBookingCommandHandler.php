@@ -46,10 +46,10 @@ final class CreateBookingCommandHandler implements CommandHandlerInterface
 
     private function manageContacts(Contacts $contacts): Contacts
     {
-        $contacts = json_decode(json_encode($contacts->toArray()),true);
+        $contacts = $contacts->toArray();
         return new Contacts(
             array_map(
-                fn(array $item) => Contact::build(type: ContactType::build($item['type']), value: $item['value']),
+                fn(object $item) => Contact::build(type: ContactType::build($item->type), value: $item->value),
                 $contacts
             )
         );
