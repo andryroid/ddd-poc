@@ -8,6 +8,7 @@ use Domain\Utils\Identifier\Uuid\UuidIdentifierInterface;
 use Domain\Utils\Message\Attributes\AsCommand;
 use Domain\Utils\Message\MessageInterface;
 use InvalidArgumentException;
+use stdClass;
 
 #[AsCommand]
 final class CreateBookingCommand implements MessageInterface
@@ -20,40 +21,44 @@ final class CreateBookingCommand implements MessageInterface
         public readonly string $departure,
         public readonly string $destination,
         public readonly string $departureTime
-
     ) {
     }
 
-    public static function fromArray(UuidIdentifierInterface $uuid, array $data): self
+    public static function fromArray(UuidIdentifierInterface $uuid, stdClass $data): self
     {
-        self::validate($data);
-
+        //check data first
+        self::validateMetadata($data);
+        //check availability
         return new self(
             uuid: $uuid,
-            firstName: $data['firstName'],
-            lastName: $data['lastName'],
-            contacts: new Contacts($data['contacts']),
-            departure: $data['departure'],
-            destination: $data['destination'],
-            departureTime: $data['departureTime']
+            firstName: $data->firstName,
+            lastName: $data->lastName,
+            contacts: new Contacts($data->contacts),
+            departure: $data->departure,
+            destination: $data->destination,
+            departureTime: $data->departureTime
         );
     }
 
-    private static function validate(array $data): void
+    private static function validateMetadata(stdClass $data): void
     {
-        if (!isset(
-            $data['firstName'],
-            $data['lastName'],
-            $data['contacts'],
-            $data['departure'],
-            $data['destination'],
-            $data['departureTime']
-        )) {
-            throw new InvalidArgumentException('some data on payload missing');
+        if (empty($data->firstName)) {
+            throw new InvalidArgumentException('Fist name');
         }
-        if (!is_array($data['contacts'])) {
-            throw new InvalidArgumentException('contacts should be an array');
+        if (empty($data->lastName)) {
+            throw new InvalidArgumentException('Last name');
+        }
+        if (empty($data->departure)) {
+            throw new InvalidArgumentException('Departure invalid');
+        }
+        if (empty($data->destination)) {
+            throw new InvalidArgumentException('Destination invalid');
+        }
+        if (empty($data->departureTime)) {
+            throw new InvalidArgumentException('Departure time invalid');
+        }
+        if (!is_array($data->contacts)) {
+            throw new InvalidArgumentException('invalid contact : array of string');
         }
     }
-
 }

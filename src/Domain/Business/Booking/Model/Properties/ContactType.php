@@ -4,8 +4,16 @@ namespace Domain\Business\Booking\Model\Properties;
 
 enum ContactType: string
 {
-    case PHONE_NUMBER = 'phone number';
+    case PHONE_NUMBER = 'phoneNumber';
     case EMAIL = 'email';
+
+    public static function build(string $type): self
+    {
+        return match ($type) {
+            self::PHONE_NUMBER->value => ContactType::PHONE_NUMBER,
+            self::EMAIL->value => ContactType::EMAIL,
+        };
+    }
 
     public function isValidValue(string $value): bool
     {

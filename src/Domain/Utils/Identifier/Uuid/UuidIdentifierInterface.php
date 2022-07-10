@@ -7,7 +7,7 @@ use Stringable;
 
 interface UuidIdentifierInterface extends JsonSerializable, Stringable
 {
-    public static function isValid(string $uuid): bool;
+    public  function isValid(string $uuid): bool;
     public static function generate(): UuidIdentifierInterface;
-    public static function fromString(string $uuid): UuidIdentifierInterface;
+    public  function fromString(string $uuid): UuidIdentifierInterface;
 }

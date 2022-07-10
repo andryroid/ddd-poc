@@ -6,27 +6,30 @@ use Domain\Business\Booking\Collection\ContactsInterface;
 use Domain\Business\Booking\Event\BookingWasCreated;
 use Domain\Business\Booking\Exception\EmptyContactsException;
 use Domain\Business\Booking\Exception\InvalidBoookingDateException;
-use Domain\Business\Booking\Exception\InvalidDepartureException;
+use Domain\Business\Booking\Exception\BookingUnavailableException;
 use Domain\Business\Booking\Model\Properties\BookingId;
 use Domain\Business\Booking\Model\Properties\Location;
 use Domain\Business\Booking\Model\Properties\Person;
 use Domain\Utils\AggregateRoot\AggregateRoot;
+use Domain\Utils\Identifier\Uuid\UuidIdentifierInterface;
+use JetBrains\PhpStorm\ArrayShape;
 
 final class Booking extends AggregateRoot
 {
 
     private function __construct(
-        private BookingId $uuid,
+        private UuidIdentifierInterface $uuid,
         private Person $person,
         private ContactsInterface $contacts,
         private Location $departure,
         private Location $destination,
-        private \DateTime $departureTime
+        private \DateTime $departureTime,
+        private \DateTimeImmutable $bookedAt
     ) {
     }
 
     public static function create(
-        BookingId $uuid,
+        UuidIdentifierInterface $uuid,
         Person $person,
         ContactsInterface $contacts,
         Location $departure,
@@ -37,11 +40,11 @@ final class Booking extends AggregateRoot
             throw new EmptyContactsException("You need to specify at least one contact information");
         }
         if ($departure->isEqual($destination)) {
-            throw new InvalidDepartureException("Destination is equal to Departure");
+            throw new BookingUnavailableException("Destination cannot be equal to Departure");
         }
         //Cannot book a trip in the past
         if (new \DateTime() > $departureTime) {
-            throw new InvalidBoookingDateException("Destination is equal to Departure");
+            throw new InvalidBoookingDateException("Cannot book a trip in the past");
         }
 
         $booking = new self(
@@ -51,6 +54,7 @@ final class Booking extends AggregateRoot
             departure: $departure,
             destination: $destination,
             departureTime: $departureTime,
+            bookedAt: \DateTimeImmutable::createFromMutable(new \DateTime())
         );
         $booking->addEvent(new BookingWasCreated($booking->uuid->generate()));
 
@@ -63,5 +67,21 @@ final class Booking extends AggregateRoot
     public function getUuid(): BookingId
     {
         return $this->uuid;
+    }
+
+    public function getSummary(): array
+    {
+        return [
+            "uuid" => $this->uuid,
+            "person" => [
+                "first_name" => $this->person->firstName,
+                "last_name" => $this->person->lastName
+            ],
+            "contacts" => $this->contacts,
+            "departure" => $this->departure->locationName,
+            "destination" => $this->destination->locationName,
+            "departure_time" => $this->departureTime,
+            "booked_at" => $this->bookedAt
+        ];
     }
 }

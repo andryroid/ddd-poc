@@ -1,11 +1,11 @@
 <?php
 
-namespace Infrastructure\Entity;
+namespace Infrastructure\Entity\Common;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-trait Timestampable
+trait Timestamp
 {
     #[ORM\Column(type: 'datetime')]
     private DateTime $createdAt;

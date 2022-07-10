@@ -12,18 +12,18 @@ abstract class AbstractController
 {
     public function __construct(
         protected ResponseManagerInterface $responseManager,
-        protected MessageDispatcherInterface $messengerDispatcher
+        protected MessageDispatcherInterface $messageDispatcher
     ) {
     }
 
     public function query(MessageInterface $message): mixed
     {
-        return $this->messengerDispatcher->dispatchMessage($message);
+        return $this->messageDispatcher->dispatchMessage($message);
     }
 
     public function command(MessageInterface $message): mixed
     {
-        return $this->messengerDispatcher->dispatchMessage($message);
+        return $this->messageDispatcher->dispatchMessage($message);
     }
 
 }

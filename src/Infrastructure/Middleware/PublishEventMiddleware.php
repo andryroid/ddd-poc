@@ -38,6 +38,9 @@ class PublishEventMiddleware implements MiddlewareInterface
         try {
             //flush all data
             $this->entityManager->flush();
+            //commit data
+            $this->entityManager->getConnection()->commit();
+            $this->entityManager->clear();
             // Remove doctrine cache after flush to get fresh data
             $cacheDriver = $this->entityManager->getConfiguration()->getResultCache()?->clear();
         } catch (Throwable $exception) {

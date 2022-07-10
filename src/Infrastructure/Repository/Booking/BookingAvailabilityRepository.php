@@ -2,12 +2,10 @@
 
 namespace Infrastructure\Repository\Booking;
 
-use Application\Booking\Transformer\BookingTransformerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Domain\Business\Booking\Model\Booking as DomainBooking;
-use Domain\Business\Booking\Model\Properties\BookingId;
-use Domain\Business\Booking\Repository\BookingRepositoryInterface;
+use Domain\Business\Booking\Repository\BookingAvailability;
 use Infrastructure\Entity\Booking\Booking;
 
 /**
@@ -18,17 +16,20 @@ use Infrastructure\Entity\Booking\Booking;
  * @method Booking[]    findAll()
  * @method Booking[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class BookingRepository extends ServiceEntityRepository implements BookingRepositoryInterface
+class BookingAvailabilityRepository extends ServiceEntityRepository implements BookingAvailability
 {
-    public function __construct(ManagerRegistry $registry,private BookingTransformerInterface $bookingTransformerInterface)
+    public function __construct(ManagerRegistry $registry,private readonly BookingRepository $bookingRepository)
     {
         parent::__construct($registry, Booking::class);
     }
 
-    public function save(DomainBooking $domainBooking) : BookingId
+    public function isAvailable(DomainBooking $booking): bool
     {
-        $entityBooking = $this->bookingTransformerInterface->fromDomainToDb($domainBooking);
-        $this->_em->persist($entityBooking);
-        return $domainBooking->getUuid();
+        $bookingData = $booking->getSummary();
+        return count($this->bookingRepository->findBy([
+             'departure' => $bookingData['departure'],
+             'destination' => $bookingData['destination'],
+             'departure_at' => $bookingData['departure_time'],
+        ])) === 0;
     }
 }

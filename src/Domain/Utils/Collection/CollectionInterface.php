@@ -10,7 +10,7 @@ interface CollectionInterface
 
     public function count(): int;
 
-    public function toArray();
+    public function toArray():array;
 
 
 }

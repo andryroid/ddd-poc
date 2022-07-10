@@ -1,0 +1,38 @@
+
+version: "3.3"
+
+services:
+  database:
+    image: mysql:8
+    restart: always
+    ports:
+      - 8003:3306
+    environment:
+      - MYSQL_USER=booking
+      - MYSQL_PASSWORD=booking
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=dt
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8002:8080
+    depends_on:
+      - database
+
+  booking:
+    #entrypoint: sh -cx "/wait-for-it.sh database:8003 -s -- php /var/www/bin/console d:m:m --no-interaction"
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    image: lalaina/ddd
+    restart: always
+    volumes:
+      - .:/var/www/
+    depends_on:
+      - database
+    ports:
+      - 8001:80
+    environment:
+      - DATABASE_URL=mysql://booking:booking@database:3306/dt

@@ -8,3 +8,6 @@ services:
         resource: '../../src/Domain'
 
     Domain\Utils\Event\EventManagerInterface: '@Infrastructure\Service\Event\EventManager'
+    Domain\Business\Booking\Repository\BookingRepositoryInterface: '@Infrastructure\Repository\Booking\BookingRepository'
+    Domain\Business\Booking\Repository\BookingAvailability: '@Infrastructure\Repository\Booking\BookingAvailabilityRepository'
+    Domain\Utils\Collection\AggregateCollectionInterface : '@Application\Shared\EventManager\AggregateCollection'

@@ -1,10 +1,10 @@
 <?php
 
-namespace Infrastructure\Entity;
+namespace Infrastructure\Entity\Common;
 
 use Doctrine\ORM\Mapping as ORM;
 
-trait Uuidable
+trait Uuid
 {
     #[ORM\Column(name: 'uuid', type: 'guid', length: 36, unique: true, options: ['index' => true])]
     private string $uuid;
