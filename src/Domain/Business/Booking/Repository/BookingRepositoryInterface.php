@@ -7,7 +7,5 @@ use Domain\Business\Booking\Model\Properties\BookingId;
 
 interface BookingRepositoryInterface
 {
-
     public function save(DomainBooking $domainBooking): BookingId;
-
 }
