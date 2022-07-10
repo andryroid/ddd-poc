@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Business\Booking\Service;
+namespace Domain\Business\Booking\Repository;
 
 use Domain\Business\Booking\Model\Booking;
 

@@ -13,8 +13,8 @@ use Domain\Business\Booking\Model\Properties\Contact;
 use Domain\Business\Booking\Model\Properties\ContactType;
 use Domain\Business\Booking\Model\Properties\Location;
 use Domain\Business\Booking\Model\Properties\Person;
+use Domain\Business\Booking\Repository\BookingAvailability;
 use Domain\Business\Booking\Repository\BookingRepositoryInterface;
-use Domain\Business\Booking\Service\BookingAvailability;
 use Domain\Utils\Event\EventManagerInterface;
 
 final class CreateBookingCommandHandler implements CommandHandlerInterface
