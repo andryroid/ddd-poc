@@ -13,6 +13,6 @@ final class PreCheckoutBookController extends AbstractController
 {
     public function __invoke(Request $request, PreCheckoutBookingQuery $query): Response
     {
-        return $this->responseManager->success(['bookingId' => $this->query($query)]);
+        return $this->responseManager->success(['booking_details' => $this->query($query)]);
     }
 }

@@ -6,7 +6,6 @@ use Application\Booking\Query\PreCheckoutBookingQuery;
 use Application\DTO\Booking\Contacts;
 use Domain\Business\Booking\Exception\BookingUnavailableException;
 use Domain\Business\Booking\Model\Booking;
-use Domain\Business\Booking\Model\Properties\BookingId;
 use Domain\Business\Booking\Model\Properties\Contact;
 use Domain\Business\Booking\Model\Properties\ContactType;
 use Domain\Business\Booking\Model\Properties\Location;
