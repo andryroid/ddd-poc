@@ -4,6 +4,7 @@ namespace Application\Booking\Query\Handler;
 
 use Application\Booking\Query\PreCheckoutBookingQuery;
 use Application\DTO\Booking\Contacts;
+use Application\Shared\Message\Handler\QueryHandlerInterface;
 use Domain\Business\Booking\Exception\BookingUnavailableException;
 use Domain\Business\Booking\Model\Booking;
 use Domain\Business\Booking\Model\Properties\Contact;
@@ -13,7 +14,7 @@ use Domain\Business\Booking\Model\Properties\Person;
 use Domain\Business\Booking\Repository\BookingAvailability;
 use Domain\Business\Booking\Service\BookingPriceCalculation;
 
-class PreCheckoutBookingHandler
+class PreCheckoutBookingQueryHandler implements QueryHandlerInterface
 {
     private function __construct(
         private readonly BookingAvailability $bookingAvailability,
