@@ -38,8 +38,7 @@ class PreCheckoutBookingHandler
         //check availability
         if (!$this->bookingAvailability->isAvailable($booking))
             throw new BookingUnavailableException("Booking no longer available");
-        $query->amountPrice = $booking->getPrice()->getDetails()['amount'];
-        return $query->presentData();
+        return $booking->getSummary();
     }
 
     private function manageContacts(Contacts $contacts): Contacts

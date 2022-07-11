@@ -18,8 +18,7 @@ class PreCheckoutBookingQuery
         public readonly string $departure,
         public readonly string $destination,
         public readonly string $departureTime,
-        public readonly int $seatNumber,
-        public float $amountPrice = 0
+        public readonly int $seatNumber
     )
     {
     }
@@ -39,17 +38,6 @@ class PreCheckoutBookingQuery
             departureTime: $data->departureTime,
             seatNumber: $data->seatNumber
         );
-    }
-
-    public function presentData() : array
-    {
-        return [
-            "departure" =>  $this->departure,
-            "destination" => $this->destination,
-            "seat_number" => $this->seatNumber,
-            "departure_time" => $this->departureTime,
-            "price" => $this->amountPrice
-        ];
     }
 
     private static function validateMetadata(stdClass $data): void

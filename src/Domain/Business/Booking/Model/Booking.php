@@ -23,7 +23,7 @@ final class Booking extends AggregateRoot
 
     private function __construct(
         private UuidIdentifierInterface $uuid,
-        private BookingPriceCalculation $bookingPriceCalculation,
+        private Price $price,
         private Person $person,
         private ContactsInterface $contacts,
         private Location $departure,
@@ -62,7 +62,7 @@ final class Booking extends AggregateRoot
 
         $booking = new self(
             uuid: $uuid,
-            bookingPriceCalculation: $bookingPriceCalculation,
+            price: $bookingPriceCalculation->calculatePrice(),
             person: $person,
             contacts: $contacts,
             departure: $departure,
@@ -97,12 +97,8 @@ final class Booking extends AggregateRoot
             "destination" => $this->destination->locationName,
             "departure_time" => $this->departureTime,
             "booked_at" => $this->bookedAt,
-            "seat_number" => $this->seatNumber
+            "seat_number" => $this->seatNumber,
+            "price" => $this->price
         ];
-    }
-
-    public function getPrice() : Price
-    {
-        return $this->bookingPriceCalculation->getPriceDetails();
     }
 }
