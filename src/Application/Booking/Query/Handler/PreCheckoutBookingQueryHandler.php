@@ -2,6 +2,7 @@
 
 namespace Application\Booking\Query\Handler;
 
+
 use Application\Booking\Query\PreCheckoutBookingQuery;
 use Application\DTO\Booking\Contacts;
 use Application\Shared\Message\Handler\QueryHandlerInterface;
