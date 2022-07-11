@@ -24,7 +24,7 @@ class CreateBookingCommandResolver implements ArgumentValueResolverInterface
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
         $data = json_decode($request->getContent());
-        yield CreateBookingCommand::fromArray(BookingIdentifier::generate(), $data);
+        yield CreateBookingCommand::fromArray(BookingIdentifier::fromString($data->uuid), $data);
     }
 
 }

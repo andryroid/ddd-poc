@@ -4,6 +4,7 @@ namespace Domain\Business\Booking\Model;
 
 use Domain\Business\Booking\Collection\ContactsInterface;
 use Domain\Business\Booking\Event\BookingWasCreated;
+use Domain\Business\Booking\Exception\InvalidPriceException;
 use Domain\Business\Booking\Exception\EmptyContactsException;
 use Domain\Business\Booking\Exception\InvalidBoookingDateException;
 use Domain\Business\Booking\Exception\BookingUnavailableException;
@@ -11,6 +12,8 @@ use Domain\Business\Booking\Exception\InvalidSeatNumberException;
 use Domain\Business\Booking\Model\Properties\BookingId;
 use Domain\Business\Booking\Model\Properties\Location;
 use Domain\Business\Booking\Model\Properties\Person;
+use Domain\Business\Booking\Model\Properties\Price;
+use Domain\Business\Booking\Service\BookingPriceCalculation;
 use Domain\Utils\AggregateRoot\AggregateRoot;
 use Domain\Utils\Identifier\Uuid\UuidIdentifierInterface;
 use JetBrains\PhpStorm\ArrayShape;
@@ -20,6 +23,7 @@ final class Booking extends AggregateRoot
 
     private function __construct(
         private UuidIdentifierInterface $uuid,
+        private BookingPriceCalculation $bookingPriceCalculation,
         private Person $person,
         private ContactsInterface $contacts,
         private Location $departure,
@@ -32,6 +36,7 @@ final class Booking extends AggregateRoot
 
     public static function create(
         UuidIdentifierInterface $uuid,
+        BookingPriceCalculation $bookingPriceCalculation,
         Person $person,
         ContactsInterface $contacts,
         Location $departure,
@@ -52,9 +57,12 @@ final class Booking extends AggregateRoot
         //check place number
         if ($seatNumber <=0)
             throw new InvalidSeatNumberException("Invalid seat number");
+        if (!isset($price))
+            throw new InvalidPriceException("Invalid price");
 
         $booking = new self(
             uuid: $uuid,
+            bookingPriceCalculation: $bookingPriceCalculation,
             person: $person,
             contacts: $contacts,
             departure: $departure,
@@ -91,5 +99,10 @@ final class Booking extends AggregateRoot
             "booked_at" => $this->bookedAt,
             "seat_number" => $this->seatNumber
         ];
+    }
+
+    public function getPrice() : Price
+    {
+        return $this->bookingPriceCalculation->getPriceDetails();
     }
 }

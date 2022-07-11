@@ -22,8 +22,7 @@ final class CreateBookingCommandHandler implements CommandHandlerInterface
 
     public function __construct(
         private readonly EventManagerInterface $eventManager,
-        private readonly BookingRepositoryInterface $bookingRepository,
-        private readonly BookingAvailability $bookingAvailability
+        private readonly BookingRepositoryInterface $bookingRepository
     ) {
     }
 
@@ -38,9 +37,6 @@ final class CreateBookingCommandHandler implements CommandHandlerInterface
             departureTime: new DateTime($command->departureTime),
             seatNumber: $command->seatNumber
         );
-        //check availability
-        if (!$this->bookingAvailability->isAvailable($booking))
-            throw new BookingUnavailableException("Booking unavailable");
         $this->eventManager->persist($booking);
         return $this->bookingRepository->save($booking);
     }
