@@ -8,25 +8,25 @@ use Symfony\Component\Uid\Uuid;
 
 abstract class  UuidIdentifier implements UuidIdentifierInterface
 {
-    public function __construct(private string $uuid)
+    public function __construct(private ?string $uuid)
     {
-        $this->uuid = $uuid."_".Uuid::v4();
+        if (is_null($this->uuid))
+        {
+            $this->uuid = Uuid::v4();
+        }
+        else {
+            $this->generateFromString($this->uuid);
+        }
     }
 
-    public function isValid(string $uuid): bool
+    public static function isValid(string $uuid): bool
     {
         return Uuid::v4()::isValid($uuid);
     }
 
     abstract static function generate(): UuidIdentifierInterface;
     
-    public function fromString(string $uuid): UuidIdentifierInterface
-    {
-        if (self::isValid($uuid)) {
-            return new((string)Uuid::v4()::fromString($uuid));
-        }
-        throw new LogicException("$uuid is not a valid uuid");
-    }
+    abstract static function fromString(string $uuid): UuidIdentifierInterface;
 
     public function __toString(): string
     {
@@ -37,4 +37,13 @@ abstract class  UuidIdentifier implements UuidIdentifierInterface
     {
         return $this->uuid;
     }
+
+    private function generateFromString(string $uuid) : self
+    {
+        if (self::isValid($uuid)) {
+            return new((string)Uuid::v4()::fromString($uuid));
+        }
+        throw new LogicException("$uuid is not a valid uuid");
+    }
+
 }

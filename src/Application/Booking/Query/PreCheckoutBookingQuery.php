@@ -1,17 +1,15 @@
 <?php
 
-namespace Application\Booking\Command;
+namespace Application\Booking\Query;
 
 use Application\DTO\Booking\Contacts;
 use Domain\Business\Booking\Collection\ContactsInterface;
 use Domain\Utils\Identifier\Uuid\UuidIdentifierInterface;
-use Domain\Utils\Message\Attributes\AsCommand;
+use Domain\Utils\Message\Attributes\AsQuery;
 use Domain\Utils\Message\MessageInterface;
-use InvalidArgumentException;
-use stdClass;
 
-#[AsCommand]
-final class CreateBookingCommand implements MessageInterface
+#[AsQuery]
+class PreCheckoutBookingQuery implements MessageInterface
 {
     private function __construct(
         public readonly UuidIdentifierInterface $uuid,
@@ -22,10 +20,11 @@ final class CreateBookingCommand implements MessageInterface
         public readonly string $destination,
         public readonly string $departureTime,
         public readonly int $seatNumber
-    ) {
+    )
+    {
     }
 
-    public static function fromArray(UuidIdentifierInterface $uuid, stdClass $data): self
+    public static function fromArray(UuidIdentifierInterface $uuid,\stdClass $data): self
     {
         //check data first
         self::validateMetadata($data);
@@ -42,7 +41,7 @@ final class CreateBookingCommand implements MessageInterface
         );
     }
 
-    private static function validateMetadata(stdClass $data): void
+    private static function validateMetadata(\stdClass $data): void
     {
         if (empty($data->firstName)) {
             throw new InvalidArgumentException('Fist name');

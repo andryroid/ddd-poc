@@ -11,6 +11,11 @@ final class BookingIdentifier extends UuidIdentifier implements BookingId
     private const PREFIX = "bkn";
     public static function generate(): UuidIdentifierInterface
     {
-        return new self(self::PREFIX);
+        return new self(uuid: null);
+    }
+
+    public static function fromString(string $uuid) : UuidIdentifierInterface
+    {
+        return new self($uuid);
     }
 }

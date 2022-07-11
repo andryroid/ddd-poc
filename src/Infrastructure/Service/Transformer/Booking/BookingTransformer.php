@@ -19,6 +19,7 @@ final class BookingTransformer implements BookingTransformerInterface
             ->setDeparture($dataFromDomain['departure'])
             ->setDestination($dataFromDomain['destination'])
             ->setBookedAt($dataFromDomain['booked_at'])
+            ->setSeatNumber($dataFromDomain['seat_number'])
             ->setDepartureAt($dataFromDomain['departure_time']);
     }
 }
