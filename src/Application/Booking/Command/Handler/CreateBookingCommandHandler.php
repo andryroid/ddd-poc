@@ -35,7 +35,8 @@ final class CreateBookingCommandHandler implements CommandHandlerInterface
             contacts: $this->manageContacts($command->contacts),
             departure: Location::build($command->departure),
             destination: Location::build($command->destination),
-            departureTime: new DateTime($command->departureTime)
+            departureTime: new DateTime($command->departureTime),
+            seatNumber: $command->seatNumber
         );
         //check availability
         if (!$this->bookingAvailability->isAvailable($booking))

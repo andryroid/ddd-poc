@@ -20,7 +20,8 @@ final class CreateBookingCommand implements MessageInterface
         public readonly ContactsInterface $contacts,
         public readonly string $departure,
         public readonly string $destination,
-        public readonly string $departureTime
+        public readonly string $departureTime,
+        public readonly int $seatNumber
     ) {
     }
 
@@ -36,7 +37,8 @@ final class CreateBookingCommand implements MessageInterface
             contacts: new Contacts($data->contacts),
             departure: $data->departure,
             destination: $data->destination,
-            departureTime: $data->departureTime
+            departureTime: $data->departureTime,
+            seatNumber: $data->seatNumber
         );
     }
 
@@ -56,6 +58,9 @@ final class CreateBookingCommand implements MessageInterface
         }
         if (empty($data->departureTime)) {
             throw new InvalidArgumentException('Departure time invalid');
+        }
+        if (empty($data->seatNumber)) {
+            throw new InvalidArgumentException('Seat number invalid');
         }
         if (!is_array($data->contacts)) {
             throw new InvalidArgumentException('invalid contact : array of string');
