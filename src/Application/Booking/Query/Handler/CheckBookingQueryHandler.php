@@ -29,7 +29,7 @@ class CheckBookingQueryHandler implements QueryHandlerInterface
             contacts: $this->manageContacts($bookingQuery->contacts),
             departure: Location::build($bookingQuery->departure),
             destination: Location::build($bookingQuery->destination),
-            departureTime: new DateTime($bookingQuery->departureTime),
+            departureTime: new \DateTime($bookingQuery->departureTime),
             seatNumber: $bookingQuery->seatNumber
         );
 
