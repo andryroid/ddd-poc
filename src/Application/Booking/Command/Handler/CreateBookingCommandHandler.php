@@ -14,6 +14,7 @@ use Domain\Business\Booking\Model\Properties\ContactType;
 use Domain\Business\Booking\Model\Properties\Location;
 use Domain\Business\Booking\Model\Properties\Person;
 use Domain\Business\Booking\Repository\BookingRepositoryInterface;
+use Domain\Business\Booking\Service\BookingPriceCalculation;
 use Domain\Utils\Event\EventManagerInterface;
 
 final class CreateBookingCommandHandler implements CommandHandlerInterface
@@ -21,7 +22,8 @@ final class CreateBookingCommandHandler implements CommandHandlerInterface
 
     public function __construct(
         private readonly EventManagerInterface $eventManager,
-        private readonly BookingRepositoryInterface $bookingRepository
+        private readonly BookingRepositoryInterface $bookingRepository,
+        private readonly BookingPriceCalculation $bookingPriceCalculation
     ) {
     }
 
@@ -29,6 +31,7 @@ final class CreateBookingCommandHandler implements CommandHandlerInterface
     {
         $booking = Booking::create(
             uuid: $command->uuid,
+            bookingPriceCalculation: $this->bookingPriceCalculation,
             person: Person::build(firstName: $command->firstName, lastName: $command->lastName),
             contacts: $this->manageContacts($command->contacts),
             departure: Location::build($command->departure),

@@ -4,6 +4,7 @@ namespace Application\Booking\Command;
 
 use Application\DTO\Booking\Contacts;
 use Domain\Business\Booking\Collection\ContactsInterface;
+use Domain\Business\Booking\Service\BookingPriceCalculation;
 use Domain\Utils\Identifier\Uuid\UuidIdentifierInterface;
 use Domain\Utils\Message\Attributes\AsCommand;
 use Domain\Utils\Message\MessageInterface;
