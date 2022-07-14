@@ -11,3 +11,4 @@ services:
     Domain\Business\Booking\Repository\BookingRepositoryInterface: '@Infrastructure\Repository\Booking\BookingRepository'
     Domain\Business\Booking\Repository\BookingAvailability: '@Infrastructure\Repository\Booking\BookingAvailabilityRepository'
     Domain\Utils\Collection\AggregateCollectionInterface : '@Application\Shared\EventManager\AggregateCollection'
+    Domain\Business\Booking\Service\BookingPriceCalculation: '@Domain\Business\Booking\Service\BookingPriceCalculationV1'

@@ -3,8 +3,8 @@
 namespace Infrastructure\Service\Transformer\Booking;
 
 use Application\Booking\Transformer\BookingTransformerInterface;
-use Application\DTO\Booking\Contacts;
 use Domain\Business\Booking\Model\Booking as DomainBooking;
+use Domain\Business\Booking\Model\Properties\Contact;
 use Infrastructure\Entity\Booking\Booking as EntityBooking;
 
 final class BookingTransformer implements BookingTransformerInterface 
@@ -15,7 +15,7 @@ final class BookingTransformer implements BookingTransformerInterface
         return (new EntityBooking())
             ->setUuid($dataFromDomain['uuid'])
             ->setPerson($dataFromDomain['person'])
-            ->setContacts(array_map(fn(Contacts $contact) => $contact->toArray(),json_decode(json_encode($dataFromDomain['contacts']),true)))
+            ->setContacts(array_map(fn(Contact $contact) => $contact->toArray(),$dataFromDomain['contacts']),true)
             ->setDeparture($dataFromDomain['departure'])
             ->setDestination($dataFromDomain['destination'])
             ->setBookedAt($dataFromDomain['booked_at'])
