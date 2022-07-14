@@ -7,6 +7,8 @@ use Domain\Business\Booking\Collection\ContactsInterface;
 use Domain\Utils\Identifier\Uuid\UuidIdentifierInterface;
 use Domain\Utils\Message\Attributes\AsQuery;
 use Domain\Utils\Message\MessageInterface;
+use InvalidArgumentException;
+use stdClass;
 
 #[AsQuery]
 class CheckBookingQuery implements MessageInterface
