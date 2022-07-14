@@ -9,7 +9,7 @@ use Domain\Utils\Message\Attributes\AsQuery;
 use Domain\Utils\Message\MessageInterface;
 
 #[AsQuery]
-class PreCheckoutBookingQuery implements MessageInterface
+class CheckBookingQuery implements MessageInterface
 {
     private function __construct(
         public readonly UuidIdentifierInterface $uuid,
@@ -24,7 +24,7 @@ class PreCheckoutBookingQuery implements MessageInterface
     {
     }
 
-    public static function fromArray(UuidIdentifierInterface $uuid,\stdClass $data): self
+    public static function fromArray(UuidIdentifierInterface $uuid, stdClass $data): self
     {
         //check data first
         self::validateMetadata($data);
@@ -41,7 +41,7 @@ class PreCheckoutBookingQuery implements MessageInterface
         );
     }
 
-    private static function validateMetadata(\stdClass $data): void
+    private static function validateMetadata(stdClass $data): void
     {
         if (empty($data->firstName)) {
             throw new InvalidArgumentException('Fist name');
