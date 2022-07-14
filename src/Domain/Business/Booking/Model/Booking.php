@@ -23,15 +23,18 @@ final class Booking extends AggregateRoot
 
     private function __construct(
         private UuidIdentifierInterface $uuid,
-        private Price $price,
+        private BookingPriceCalculation $bookingPriceCalculation,
         private Person $person,
         private ContactsInterface $contacts,
         private Location $departure,
         private Location $destination,
         private \DateTime $departureTime,
         private \DateTimeImmutable $bookedAt,
-        private int $seatNumber
-    ) {
+        private int $seatNumber,
+        private ?Price $price = null
+    )
+    {
+        $this->price = $this->bookingPriceCalculation->calculatePrice($this);
     }
 
     public static function create(
@@ -42,7 +45,8 @@ final class Booking extends AggregateRoot
         Location $departure,
         Location $destination,
         \DateTime $departureTime,
-        int $seatNumber
+        int $seatNumber,
+        bool $createBookingEvent = true
     ): self {
         if ($contacts->isEmpty()) {
             throw new EmptyContactsException("You need to specify at least one contact information");
@@ -57,12 +61,10 @@ final class Booking extends AggregateRoot
         //check place number
         if ($seatNumber <=0)
             throw new InvalidSeatNumberException("Invalid seat number");
-        if (!isset($price))
-            throw new InvalidPriceException("Invalid price");
 
         $booking = new self(
             uuid: $uuid,
-            price: $bookingPriceCalculation->calculatePrice(),
+            bookingPriceCalculation: $bookingPriceCalculation,
             person: $person,
             contacts: $contacts,
             departure: $departure,
@@ -71,7 +73,9 @@ final class Booking extends AggregateRoot
             bookedAt: \DateTimeImmutable::createFromMutable(new \DateTime()),
             seatNumber: $seatNumber
         );
-        $booking->addEvent(new BookingWasCreated($booking->uuid->generate()));
+        //ty zavatra ty le tiako tenen
+        if ($createBookingEvent)
+            $booking->addEvent(new BookingWasCreated($booking->uuid->generate()));
 
         return $booking;
     }
@@ -92,13 +96,13 @@ final class Booking extends AggregateRoot
                 "first_name" => $this->person->firstName,
                 "last_name" => $this->person->lastName
             ],
-            "contacts" => $this->contacts,
+            "contacts" => $this->contacts->toArray(),
             "departure" => $this->departure->locationName,
             "destination" => $this->destination->locationName,
             "departure_time" => $this->departureTime,
             "booked_at" => $this->bookedAt,
             "seat_number" => $this->seatNumber,
-            "price" => $this->price
+            "price" => $this->price->getDetails()
         ];
     }
 }

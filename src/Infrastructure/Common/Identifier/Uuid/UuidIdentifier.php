@@ -41,7 +41,8 @@ abstract class  UuidIdentifier implements UuidIdentifierInterface
     private function generateFromString(string $uuid) : self
     {
         if (self::isValid($uuid)) {
-            return new((string)Uuid::v4()::fromString($uuid));
+            $this->uuid = new (Uuid::v4()::fromString($uuid));
+            return $this;
         }
         throw new LogicException("$uuid is not a valid uuid");
     }

@@ -29,8 +29,9 @@ class CheckBookingQueryHandler implements QueryHandlerInterface
             contacts: $this->manageContacts($bookingQuery->contacts),
             departure: Location::build($bookingQuery->departure),
             destination: Location::build($bookingQuery->destination),
-            departureTime: new \DateTime($bookingQuery->departureTime),
-            seatNumber: $bookingQuery->seatNumber
+            departureTime: \DateTime::createFromFormat("Y-m-d",$bookingQuery->departureTime),
+            seatNumber: $bookingQuery->seatNumber,
+            createBookingEvent: false
         );
 
         return $booking->getSummary();
