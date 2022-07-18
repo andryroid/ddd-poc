@@ -1,27 +1,30 @@
 <?php
 
-namespace Infrastructure\Resolver\Booking;
+namespace Infrastructure\Resolver\Request;
 
-use Application\Booking\Command\CreateBookingCommand;
-use Application\Booking\Query\PreCheckoutBookingQuery;
-use Infrastructure\Common\Identifier\Uuid\Booking\BookingIdentifier;
+use Application\Shared\Message\FromArrayableInterface;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
 #[AutoconfigureTag(name: 'controller.argument_value_resolver', attributes: ['priority' => 100])]
-class PreCheckoutBookingResolver implements ArgumentValueResolverInterface
+class ControllerArgumentResolver implements ArgumentValueResolverInterface
 {
     public function supports(Request $request, ArgumentMetadata $argument): bool
     {
-        return $argument->getType() === PreCheckoutBookingQuery::class;
+        if (!is_subclass_of($argument->getType(), FromArrayableInterface::class)) {
+            return false;
+        }
+
+        return true;
     }
 
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        $data = json_decode($request->getContent());
-        yield PreCheckoutBookingQuery::fromArray(BookingIdentifier::generate(), $data);
+        $message = $argument->getType();
+        $data = json_decode($request->getContent(), true);
+        yield $message::fromArray($data);
     }
 
 }

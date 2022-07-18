@@ -2,9 +2,9 @@
 
 namespace Domain\Business\Booking\Model\Properties;
 
-use Domain\Utils\Identifier\Uuid\UuidIdentifierInterface;
+use Domain\Utils\Identifier\Uuid\UuidAbstract;
 
-interface BookingId extends UuidIdentifierInterface
+final class BookingId extends UuidAbstract
 {
 
 }

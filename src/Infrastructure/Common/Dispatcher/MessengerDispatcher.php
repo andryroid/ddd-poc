@@ -5,6 +5,7 @@ namespace Infrastructure\Common\Dispatcher;
 use Domain\Utils\Message\Attributes\BusInterface;
 use Domain\Utils\Message\MessageInterface;
 use Psr\Container\ContainerInterface;
+use ReflectionAttribute;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
@@ -28,7 +29,10 @@ final class MessengerDispatcher implements MessageDispatcherInterface, ServiceSu
     private function getBus(MessageInterface $message): MessageBusInterface
     {
         $class = new \ReflectionClass($message);
-        $attributes = $class->getAttributes();
+        $attributes = $class->getAttributes(
+            BusInterface::class,
+            ReflectionAttribute::IS_INSTANCEOF
+        );
         /** @var ?BusInterface $busType */
         $busType = isset($attributes[0]) ? $attributes[0]->newInstance() : null;
 

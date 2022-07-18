@@ -9,7 +9,7 @@ use Domain\Utils\Message\MessageInterface;
 final class BookingWasCreated implements MessageInterface
 {
     public function __construct(
-        private readonly string $identifierId
+        public readonly string $identifierId
     ) {
     }
 }

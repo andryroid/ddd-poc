@@ -3,18 +3,17 @@
 namespace Application\Booking\Command;
 
 use Application\DTO\Booking\Contacts;
+use Application\Shared\Message\FromArrayableInterface;
 use Domain\Business\Booking\Collection\ContactsInterface;
-use Domain\Utils\Identifier\Uuid\UuidIdentifierInterface;
 use Domain\Utils\Message\Attributes\AsCommand;
 use Domain\Utils\Message\MessageInterface;
 use InvalidArgumentException;
 use stdClass;
 
 #[AsCommand]
-final class CreateBookingCommand implements MessageInterface
+final class CreateBookingCommand implements MessageInterface, FromArrayableInterface
 {
     private function __construct(
-        public readonly UuidIdentifierInterface $uuid,
         public readonly string $firstName,
         public readonly string $lastName,
         public readonly ContactsInterface $contacts,
@@ -25,13 +24,14 @@ final class CreateBookingCommand implements MessageInterface
     ) {
     }
 
-    public static function fromArray(UuidIdentifierInterface $uuid, stdClass $data): self
+    public static function fromArray(array $data): self
     {
+        //todo use array instead of stdclass , the method name is fromArray
+        $data = (object)$data;
         //check data first
         self::validateMetadata($data);
         //check availability
         return new self(
-            uuid: $uuid,
             firstName: $data->firstName,
             lastName: $data->lastName,
             contacts: new Contacts($data->contacts),

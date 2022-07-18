@@ -2,57 +2,48 @@
 
 namespace Infrastructure\Entity\Booking;
 
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Infrastructure\Entity\Common\Uuid;
 use Infrastructure\Repository\Booking\BookingRepository;
 
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 class Booking
 {
+    use Uuid;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $uuid;
+    #[ORM\Column(type: 'json')]
+    private array $person = [];
 
     #[ORM\Column(type: 'json')]
-    private $person = [];
-
-    #[ORM\Column(type: 'json')]
-    private $contacts = [];
+    private array $contacts = [];
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $departure;
+    private string $departure;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $destination;
+    private string $destination;
 
     #[ORM\Column(type: 'datetime')]
-    private $departure_at;
+    private DateTimeInterface $departureAt;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private $booked_at;
+    private DateTimeImmutable $bookedAt;
 
     #[ORM\Column(type: 'integer')]
-    private $seat_number;
+    private int $seatNumber;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUuid(): ?string
-    {
-        return $this->uuid;
-    }
-
-    public function setUuid(string $uuid): self
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
 
     public function getPerson(): ?array
     {
@@ -102,38 +93,38 @@ class Booking
         return $this;
     }
 
-    public function getDepartureAt(): ?\DateTimeInterface
+    public function getDepartureAt(): ?DateTimeInterface
     {
-        return $this->departure_at;
+        return $this->departureAt;
     }
 
-    public function setDepartureAt(\DateTimeInterface $departure_at): self
+    public function setDepartureAt(DateTimeInterface $departureAt): self
     {
-        $this->departure_at = $departure_at;
+        $this->departureAt = $departureAt;
 
         return $this;
     }
 
-    public function getBookedAt(): ?\DateTimeImmutable
+    public function getBookedAt(): ?DateTimeImmutable
     {
-        return $this->booked_at;
+        return $this->bookedAt;
     }
 
-    public function setBookedAt(\DateTimeImmutable $booked_at): self
+    public function setBookedAt(DateTimeImmutable $bookedAt): self
     {
-        $this->booked_at = $booked_at;
+        $this->bookedAt = $bookedAt;
 
         return $this;
     }
 
     public function getSeatNumber(): ?int
     {
-        return $this->seat_number;
+        return $this->seatNumber;
     }
 
-    public function setSeatNumber(int $seat_number): self
+    public function setSeatNumber(int $seatNumber): self
     {
-        $this->seat_number = $seat_number;
+        $this->seatNumber = $seatNumber;
 
         return $this;
     }

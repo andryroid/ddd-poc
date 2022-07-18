@@ -6,13 +6,13 @@ use Application\Booking\Command\CreateBookingCommand;
 use Application\DTO\Booking\Contacts;
 use Application\Shared\Message\Handler\CommandHandlerInterface;
 use DateTime;
-use Domain\Business\Booking\Exception\BookingUnavailableException;
 use Domain\Business\Booking\Model\Booking;
 use Domain\Business\Booking\Model\Properties\BookingId;
 use Domain\Business\Booking\Model\Properties\Contact;
 use Domain\Business\Booking\Model\Properties\ContactType;
 use Domain\Business\Booking\Model\Properties\Location;
 use Domain\Business\Booking\Model\Properties\Person;
+use Domain\Business\Booking\Model\Properties\Price;
 use Domain\Business\Booking\Repository\BookingRepositoryInterface;
 use Domain\Utils\Event\EventManagerInterface;
 
@@ -28,12 +28,12 @@ final class CreateBookingCommandHandler implements CommandHandlerInterface
     public function __invoke(CreateBookingCommand $command): BookingId
     {
         $booking = Booking::create(
-            uuid: $command->uuid,
             person: Person::build(firstName: $command->firstName, lastName: $command->lastName),
             contacts: $this->manageContacts($command->contacts),
             departure: Location::build($command->departure),
             destination: Location::build($command->destination),
             departureTime: new DateTime($command->departureTime),
+            price: Price::build('AR', 500),
             seatNumber: $command->seatNumber
         );
         $this->eventManager->persist($booking);

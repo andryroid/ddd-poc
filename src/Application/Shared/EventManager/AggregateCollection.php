@@ -1,21 +1,25 @@
 <?php
+
 namespace Application\Shared\EventManager;
 
 use Domain\Utils\AggregateRoot\AggregateRoot;
 use Domain\Utils\Collection\AggregateCollectionInterface;
 
-final class AggregateCollection implements AggregateCollectionInterface {
-    
+final class AggregateCollection implements AggregateCollectionInterface
+{
+
     private array $aggregates = [];
-    
+
     public function clear(): void
     {
         $this->aggregates = [];
     }
-    public function add(AggregateRoot $aggregateRoot): static 
+
+    public function add(AggregateRoot $aggregateRoot): self
     {
         $this->aggregates[] = $aggregateRoot;
-        return new static();
+
+        return $this;
     }
 
     public function isEmpty(): bool
@@ -25,7 +29,7 @@ final class AggregateCollection implements AggregateCollectionInterface {
 
     public function contains(mixed $element): bool
     {
-        return in_array($this->aggregates,$element);
+        return in_array($this->aggregates, $element);
     }
 
     public function count(): int
@@ -33,7 +37,7 @@ final class AggregateCollection implements AggregateCollectionInterface {
         return count($this->aggregates);
     }
 
-    public function toArray() : array
+    public function toArray(): array
     {
         return $this->aggregates;
     }

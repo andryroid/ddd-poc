@@ -7,7 +7,7 @@ use Domain\Utils\AggregateRoot\AggregateRoot;
 interface AggregateCollectionInterface extends CollectionInterface
 {
     public function clear(): void;
-    public function add(AggregateRoot $aggregateRoot): static;
+    public function add(AggregateRoot $aggregateRoot): self;
 
 
 }
